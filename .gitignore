@@ -21,4 +21,5 @@ project/plugins/project/
 dbgen/*.tbl
 dbgen/*.o
 dbgen/dbgen
+dbgen/output
 dbgen/qgen
