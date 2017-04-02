@@ -27,5 +27,6 @@ dbgen/qgen
 
 .idea/
 tpch-spark.iml
+.conf/tpch-spark.conf
 
 
