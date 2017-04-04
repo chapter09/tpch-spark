@@ -24,3 +24,9 @@ dbgen/*.o
 dbgen/dbgen
 dbgen/output
 dbgen/qgen
+
+.idea/
+tpch-spark.iml
+conf/tpch-spark.conf
+
+
