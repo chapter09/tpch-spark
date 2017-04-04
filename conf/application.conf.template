@@ -4,7 +4,8 @@ all {
   query-num: 23
 }
 
-Qjoin {
+Q23 {
   table-a: "",
-  table-b: true
+  table-b: "",
+  operator:
 }

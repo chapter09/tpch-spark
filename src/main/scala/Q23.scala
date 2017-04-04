@@ -28,6 +28,10 @@ class Q23 extends TpchQuery {
     val decrease = udf { (x: Double, y: Double) => x * (1 - y) }
     val increase = udf { (x: Double, y: Double) => x * (1 + y) }
 
+    val tableA = conf.getString("Q23.table-a")
+    val tableB = conf.getString("Q23.table-b")
+
+
     schemaProvider.lineitem.filter($"l_shipdate" <= "1998-09-02")
       .groupBy($"l_returnflag", $"l_linestatus")
       .agg(sum($"l_quantity"), sum($"l_extendedprice"),
