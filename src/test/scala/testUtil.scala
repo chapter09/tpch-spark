@@ -18,5 +18,4 @@ object testUtil {
     println(tpchConf.getBoolean("Qjoin.table-b"))
 
   }
-
 }

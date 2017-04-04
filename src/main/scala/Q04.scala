@@ -11,7 +11,7 @@ import org.apache.spark.sql.functions.count
  */
 class Q04 extends TpchQuery {
 
-  override def execute(sc: SparkContext, schemaProvider: TpchSchemaProvider): DataFrame = {
+  override def execute(sc: SparkContext, schemaProvider: TpchSchemaProvider, tpchConf: TpchConf): DataFrame = {
 
     // this is used to implicitly convert an RDD to a DataFrame.
     val sqlContext = new org.apache.spark.sql.SQLContext(sc)

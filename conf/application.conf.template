@@ -1,0 +1,10 @@
+all {
+  input-dir: "hdfs://",
+  output-dir: "hdfs://",
+  query-num: 23
+}
+
+Qjoin {
+  table-a: "",
+  table-b: true
+}

@@ -14,9 +14,11 @@ import org.apache.spark.sql.functions.udf
   *
   */
 
-class Qjoin extends TpchQuery {
+class Q23 extends TpchQuery {
 
-  override def execute(sc: SparkContext, schemaProvider: TpchSchemaProvider): DataFrame = {
+  def execute(sc: SparkContext,
+    schemaProvider: TpchSchemaProvider,
+    conf: TpchConf): DataFrame = {
 
     // this is used to implicitly convert an RDD to a DataFrame.
     val sqlContext = new org.apache.spark.sql.SQLContext(sc)
