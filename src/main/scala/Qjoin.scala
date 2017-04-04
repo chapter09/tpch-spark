@@ -14,7 +14,7 @@ import org.apache.spark.sql.functions.udf
   *
   */
 
-class Qx extends TpchQuery {
+class Qjoin extends TpchQuery {
 
   override def execute(sc: SparkContext, schemaProvider: TpchSchemaProvider): DataFrame = {
 
