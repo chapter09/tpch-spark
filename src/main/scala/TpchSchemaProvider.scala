@@ -88,10 +88,13 @@ class TpchSchemaProvider(sc: SparkContext, inputDir: String) {
 
   val dfMap = Map(
     "customer" -> sc.textFile(inputDir + "/customer.tbl*").map(_.split('|')).map(p =>
-      Customer(p(0).trim.toInt, p(1).trim, p(2).trim, p(3).trim.toInt, p(4).trim, p(5).trim.toDouble, p(6).trim, p(7).trim)).toDF(),
+      Customer(p(0).trim.toInt, p(1).trim, p(2).trim, p(3).trim.toInt,
+        p(4).trim, p(5).trim.toDouble, p(6).trim, p(7).trim)).toDF(),
 
     "lineitem" -> sc.textFile(inputDir + "/lineitem.tbl*").map(_.split('|')).map(p =>
-      Lineitem(p(0).trim.toInt, p(1).trim.toInt, p(2).trim.toInt, p(3).trim.toInt, p(4).trim.toDouble, p(5).trim.toDouble, p(6).trim.toDouble, p(7).trim.toDouble, p(8).trim, p(9).trim, p(10).trim, p(11).trim, p(12).trim, p(13).trim, p(14).trim, p(15).trim)).toDF(),
+      Lineitem(p(0).trim.toInt, p(1).trim.toInt, p(2).trim.toInt, p(3).trim.toInt,
+        p(4).trim.toDouble, p(5).trim.toDouble, p(6).trim.toDouble, p(7).trim.toDouble,
+        p(8).trim, p(9).trim, p(10).trim, p(11).trim, p(12).trim, p(13).trim, p(14).trim, p(15).trim)).toDF(),
 
     "nation" -> sc.textFile(inputDir + "/nation.tbl*").map(_.split('|')).map(p =>
       Nation(p(0).trim.toInt, p(1).trim, p(2).trim.toInt, p(3).trim)).toDF(),
@@ -100,16 +103,20 @@ class TpchSchemaProvider(sc: SparkContext, inputDir: String) {
       Region(p(0).trim.toInt, p(1).trim, p(2).trim)).toDF(),
 
     "order" -> sc.textFile(inputDir + "/orders.tbl*").map(_.split('|')).map(p =>
-      Order(p(0).trim.toInt, p(1).trim.toInt, p(2).trim, p(3).trim.toDouble, p(4).trim, p(5).trim, p(6).trim, p(7).trim.toInt, p(8).trim)).toDF(),
+      Order(p(0).trim.toInt, p(1).trim.toInt, p(2).trim, p(3).trim.toDouble,
+        p(4).trim, p(5).trim, p(6).trim, p(7).trim.toInt, p(8).trim)).toDF(),
 
     "part" -> sc.textFile(inputDir + "/part.tbl*").map(_.split('|')).map(p =>
-      Part(p(0).trim.toInt, p(1).trim, p(2).trim, p(3).trim, p(4).trim, p(5).trim.toInt, p(6).trim, p(7).trim.toDouble, p(8).trim)).toDF(),
+      Part(p(0).trim.toInt, p(1).trim, p(2).trim, p(3).trim,
+        p(4).trim, p(5).trim.toInt, p(6).trim, p(7).trim.toDouble, p(8).trim)).toDF(),
 
     "partsupp" -> sc.textFile(inputDir + "/partsupp.tbl*").map(_.split('|')).map(p =>
-      Partsupp(p(0).trim.toInt, p(1).trim.toInt, p(2).trim.toInt, p(3).trim.toDouble, p(4).trim)).toDF(),
+      Partsupp(p(0).trim.toInt, p(1).trim.toInt, p(2).trim.toInt, p(3).trim.toDouble,
+        p(4).trim)).toDF(),
 
     "supplier" -> sc.textFile(inputDir + "/supplier.tbl*").map(_.split('|')).map(p =>
-      Supplier(p(0).trim.toInt, p(1).trim, p(2).trim, p(3).trim.toInt, p(4).trim, p(5).trim.toDouble, p(6).trim)).toDF())
+      Supplier(p(0).trim.toInt, p(1).trim, p(2).trim, p(3).trim.toInt,
+        p(4).trim, p(5).trim.toDouble, p(6).trim)).toDF())
 
   // for implicits
   val customer = dfMap.get("customer").get

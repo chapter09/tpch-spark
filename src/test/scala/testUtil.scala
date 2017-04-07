@@ -15,7 +15,7 @@ object testUtil {
     val tpchConf = new TpchConf()
 
     println(tpchConf.getString("all.input-dir"))
-    println(tpchConf.getBoolean("Qjoin.table-b"))
+    println(tpchConf.getString("Q23.table-b"))
 
   }
 }
