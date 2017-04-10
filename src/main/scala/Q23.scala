@@ -33,10 +33,10 @@ class Q23 extends TpchQuery {
     import spark.sql
 
     sql("CREATE TABLE IF NOT EXISTS customer "
-    + "(c_custkey Int, c_name: String, c_address: String, c_nationkey: Int, "
-    + "c_phone: String, c_acctbal: Double, c_mktsegment: String, c_comment: String)")
+    + "(c_custkey Int, c_name String, c_address String, c_nationkey Int, "
+    + "c_phone String, c_acctbal Double, c_mktsegment String, c_comment String)")
 
-    sql(f"LOAD DATA LOCAL INPATH '$warehouseLocation/customer.tbl' INTO TABLE customer")
+    sql(f"LOAD DATA INPATH '/tpch/customer.tbl' INTO TABLE customer")
 
     sql("SELECT * FROM customer").toDF()
 
