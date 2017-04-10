@@ -7,7 +7,7 @@ import com.typesafe.config.ConfigFactory
 /**
   * Created by hao on 2017-04-02.
   */
-object testUtil {
+object TestUtil {
 
   def main(args: Array[String]): Unit = {
 //    val configPath = System.getProperty("")
