@@ -1,4 +1,4 @@
-name := "Spark TPC-H Queries"
+name := "Spark-TPCH-queries"
 
 version := "1.0"
 
