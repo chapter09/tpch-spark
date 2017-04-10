@@ -84,7 +84,7 @@ object TpchQuery {
 
     val tpchConf = new TpchConf()
 
-    val queryNum = tpchConf.getInt("query-num")
+    val queryNum = tpchConf.getInt("all.query-num")
 
     // read files from local FS
     /*val INPUT_DIR = "file://" + new File(".").getAbsolutePath() + "/dbgen"*/
