@@ -36,7 +36,7 @@ class Q23 extends TpchQuery {
     + "(c_custkey Int, c_name: String, c_address: String, c_nationkey: Int, "
     + "c_phone: String, c_acctbal: Double, c_mktsegment: String, c_comment: String)")
 
-    sql("LOAD DATA LOCAL INPATH '/tpch/customer.tbl' INTO TABLE customer")
+    sql(f"LOAD DATA LOCAL INPATH '$warehouseLocation/customer.tbl' INTO TABLE customer")
 
     sql("SELECT * FROM customer").toDF()
 
