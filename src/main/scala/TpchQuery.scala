@@ -77,7 +77,7 @@ object TpchQuery {
   }
 
 
-  def main(): Unit = {
+  def main(args: Array[String]): Unit = {
 
     val sparkConf = new SparkConf().setAppName("Simple Application")
     val sc = new SparkContext(sparkConf)
