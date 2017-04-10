@@ -24,7 +24,6 @@ class Q23 extends TpchQuery {
 
     val spark = SparkSession
       .builder()
-      .appName("Spark Hive Example")
       .config("spark.sql.warehouse.dir", warehouseLocation)
       .enableHiveSupport()
       .getOrCreate()
@@ -34,11 +33,13 @@ class Q23 extends TpchQuery {
 
     sql("CREATE EXTERNAL TABLE IF NOT EXISTS customer "
     + "(c_custkey Int, c_name String, c_address String, c_nationkey Int, "
-    + "c_phone String, c_acctbal Double, c_mktsegment String, c_comment String)")
+    + "c_phone String, c_acctbal Double, c_mktsegment String, c_comment String) "
+    + "ROW FORMAT DELIMITED FIELDS TERMINATED BY '\\|' "
+    + "STORED AS TEXTFILE LOCATION '/tpch/customer.tbl'")
 
-    sql(f"LOAD DATA INPATH '/tpch/customer.tbl' INTO TABLE customer")
+//    sql(f"LOAD DATA INPATH '/tpch/customer.tbl' INTO TABLE customer")
 
-    sql("SELECT * FROM customer").toDF()
+    sql("SELECT * FROM customer")
 
 
     //val tableA = conf.getString("Q23.table-a")
