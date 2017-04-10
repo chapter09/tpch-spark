@@ -1,11 +1,7 @@
 package main.scala
 
 import org.apache.spark.SparkContext
-import org.apache.spark.sql.functions.udf
 import org.apache.spark.sql.{DataFrame, SparkSession}
-import org.apache.spark.sql.functions.count
-import org.apache.spark.sql.functions.sum
-import org.apache.spark.sql.functions.avg
 
 /**
   * TPC-H Query X
@@ -17,7 +13,7 @@ class Q23 extends TpchQuery {
 
   def execute(sc: SparkContext,
     schemaProvider: TpchSchemaProvider,
-    conf: TpchConf): Unit = {
+    conf: TpchConf): DataFrame = {
 
     // this is used to implicitly convert an RDD to a DataFrame.
 //    val sqlContext = new org.apache.spark.sql.SQLContext(sc)
@@ -38,7 +34,7 @@ class Q23 extends TpchQuery {
 
     sql("CREATE TABLE IF NOT EXISTS src (key INT, value STRING)")
     sql("LOAD DATA LOCAL INPATH '/tpch/customer.tbl' INTO TABLE customer")
-    sql("SELECT * FROM customer").show()
+    sql("SELECT * FROM customer").toDF()
 
 
     //val tableA = conf.getString("Q23.table-a")
