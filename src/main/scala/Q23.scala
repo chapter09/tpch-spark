@@ -32,8 +32,12 @@ class Q23 extends TpchQuery {
     import spark.implicits._
     import spark.sql
 
-    sql("CREATE TABLE IF NOT EXISTS src (key INT, value STRING)")
+    sql("CREATE TABLE IF NOT EXISTS customer "
+    + "(c_custkey Int, c_name: String, c_address: String, c_nationkey: Int, "
+    + "c_phone: String, c_acctbal: Double, c_mktsegment: String, c_comment: String)")
+
     sql("LOAD DATA LOCAL INPATH '/tpch/customer.tbl' INTO TABLE customer")
+
     sql("SELECT * FROM customer").toDF()
 
 
