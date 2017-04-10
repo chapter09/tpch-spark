@@ -79,14 +79,14 @@ object TpchQuery {
 
   def main(args: Array[String]): Unit = {
 
-    val sparkConf = new SparkConf().setAppName("Simple Application")
-    val sc = new SparkContext(sparkConf)
-
     val tpchConf = new TpchConf()
 
     val queryNum = tpchConf.getInt("all.query-num")
 
-    // read files from local FS
+    val sparkConf = new SparkConf().setAppName(f"Spark TPCH Query-$queryNum")
+    val sc = new SparkContext(sparkConf)
+
+        // read files from local FS
     /*val INPUT_DIR = "file://" + new File(".").getAbsolutePath() + "/dbgen"*/
     val INPUT_DIR = tpchConf.getString("all.input-dir")
 
