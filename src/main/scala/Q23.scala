@@ -32,7 +32,7 @@ class Q23 extends TpchQuery {
     import spark.implicits._
     import spark.sql
 
-    sql("CREATE TABLE IF NOT EXISTS customer "
+    sql("CREATE EXTERNAL TABLE IF NOT EXISTS customer "
     + "(c_custkey Int, c_name String, c_address String, c_nationkey Int, "
     + "c_phone String, c_acctbal Double, c_mktsegment String, c_comment String)")
 
