@@ -17,16 +17,29 @@ class Q23 extends TpchQuery {
 
   def execute(sc: SparkContext,
     schemaProvider: TpchSchemaProvider,
-    conf: TpchConf): DataFrame = {
+    conf: TpchConf): Unit = {
 
     // this is used to implicitly convert an RDD to a DataFrame.
-    val sqlContext = new org.apache.spark.sql.SQLContext(sc)
-    import sqlContext.implicits._
-    import schemaProvider._
+//    val sqlContext = new org.apache.spark.sql.SQLContext(sc)
+//    import sqlContext.implicits._
+//    import schemaProvider._
 
+    val warehouseLocation = conf.getString("all.input-dir")
 
-    val decrease = udf { (x: Double, y: Double) => x * (1 - y) }
-    val increase = udf { (x: Double, y: Double) => x * (1 + y) }
+    val spark = SparkSession
+      .builder()
+      .appName("Spark Hive Example")
+      .config("spark.sql.warehouse.dir", warehouseLocation)
+      .enableHiveSupport()
+      .getOrCreate()
+
+    import spark.implicits._
+    import spark.sql
+
+    sql("CREATE TABLE IF NOT EXISTS src (key INT, value STRING)")
+    sql("LOAD DATA LOCAL INPATH '/tpch/customer.tbl' INTO TABLE customer")
+    sql("SELECT * FROM customer").show()
+
 
     //val tableA = conf.getString("Q23.table-a")
     //val tableB = conf.getString("Q23.table-b")
@@ -35,13 +48,6 @@ class Q23 extends TpchQuery {
     //sqlDF.show()
     //sqlDF
 
-    schemaProvider.lineitem.filter($"l_shipdate" <= "1998-09-02")
-      .groupBy($"l_returnflag", $"l_linestatus")
-      .agg(sum($"l_quantity"), sum($"l_extendedprice"),
-        sum(decrease($"l_extendedprice", $"l_discount")),
-        sum(increase(decrease($"l_extendedprice", $"l_discount"), $"l_tax")),
-        avg($"l_quantity"), avg($"l_extendedprice"), avg($"l_discount"), count($"l_quantity"))
-          .sort($"l_returnflag", $"l_linestatus")
   }
 
 }
