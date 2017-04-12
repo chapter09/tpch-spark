@@ -90,7 +90,7 @@ object TpchQuery {
     /*val INPUT_DIR = "file://" + new File(".").getAbsolutePath() + "/dbgen"*/
     val INPUT_DIR = tpchConf.getString("all.hdfs") + tpchConf.getString("all.input-dir")
 
-    val schemaProvider = new TpchSchemaProvider(sc, INPUT_DIR)
+    val schemaProvider = new TpchSchemaProvider(sc, tpchConf, INPUT_DIR)
 
     val output = new ListBuffer[(String, Float)]
     output ++= executeQueries(sc, schemaProvider, queryNum, tpchConf)

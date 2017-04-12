@@ -1,6 +1,7 @@
 package main.scala
 
 import org.apache.spark.SparkContext
+import org.apache.spark.sql.DataFrame
 
 // TPC-H table schemas
 case class Customer(
@@ -80,53 +81,55 @@ case class Supplier(
   s_acctbal: Double,
   s_comment: String)
 
-class TpchSchemaProvider(sc: SparkContext, inputDir: String) {
+class TpchSchemaProvider(sc: SparkContext, tpchConf: TpchConf, inputDir: String) {
 
   // this is used to implicitly convert an RDD to a DataFrame.
   val sqlContext = new org.apache.spark.sql.SQLContext(sc)
   import sqlContext.implicits._
 
+  val dataScale = tpchConf.getString("all.data-scale")
+
   val dfMap = Map(
-    "customer" -> sc.textFile(inputDir + "/customer.tbl*").map(_.split('|')).map(p =>
+    "customer" -> sc.textFile(inputDir + s"/customer-$dataScale.tbl*").map(_.split('|')).map(p =>
       Customer(p(0).trim.toInt, p(1).trim, p(2).trim, p(3).trim.toInt,
         p(4).trim, p(5).trim.toDouble, p(6).trim, p(7).trim)).toDF(),
 
-    "lineitem" -> sc.textFile(inputDir + "/lineitem.tbl*").map(_.split('|')).map(p =>
+    "lineitem" -> sc.textFile(inputDir + s"/lineitem-$dataScale.tbl*").map(_.split('|')).map(p =>
       Lineitem(p(0).trim.toInt, p(1).trim.toInt, p(2).trim.toInt, p(3).trim.toInt,
         p(4).trim.toDouble, p(5).trim.toDouble, p(6).trim.toDouble, p(7).trim.toDouble,
         p(8).trim, p(9).trim, p(10).trim, p(11).trim, p(12).trim, p(13).trim, p(14).trim, p(15).trim)).toDF(),
 
-    "nation" -> sc.textFile(inputDir + "/nation.tbl*").map(_.split('|')).map(p =>
+    "nation" -> sc.textFile(inputDir + s"/nation-$dataScale.tbl*").map(_.split('|')).map(p =>
       Nation(p(0).trim.toInt, p(1).trim, p(2).trim.toInt, p(3).trim)).toDF(),
 
-    "region" -> sc.textFile(inputDir + "/region.tbl*").map(_.split('|')).map(p =>
+    "region" -> sc.textFile(inputDir + s"/region-$dataScale.tbl*").map(_.split('|')).map(p =>
       Region(p(0).trim.toInt, p(1).trim, p(2).trim)).toDF(),
 
-    "order" -> sc.textFile(inputDir + "/orders.tbl*").map(_.split('|')).map(p =>
+    "order" -> sc.textFile(inputDir + s"/orders-$dataScale.tbl*").map(_.split('|')).map(p =>
       Order(p(0).trim.toInt, p(1).trim.toInt, p(2).trim, p(3).trim.toDouble,
         p(4).trim, p(5).trim, p(6).trim, p(7).trim.toInt, p(8).trim)).toDF(),
 
-    "part" -> sc.textFile(inputDir + "/part.tbl*").map(_.split('|')).map(p =>
+    "part" -> sc.textFile(inputDir + s"/part-$dataScale.tbl*").map(_.split('|')).map(p =>
       Part(p(0).trim.toInt, p(1).trim, p(2).trim, p(3).trim,
         p(4).trim, p(5).trim.toInt, p(6).trim, p(7).trim.toDouble, p(8).trim)).toDF(),
 
-    "partsupp" -> sc.textFile(inputDir + "/partsupp.tbl*").map(_.split('|')).map(p =>
+    "partsupp" -> sc.textFile(inputDir + s"/partsupp-$dataScale.tbl*").map(_.split('|')).map(p =>
       Partsupp(p(0).trim.toInt, p(1).trim.toInt, p(2).trim.toInt, p(3).trim.toDouble,
         p(4).trim)).toDF(),
 
-    "supplier" -> sc.textFile(inputDir + "/supplier.tbl*").map(_.split('|')).map(p =>
+    "supplier" -> sc.textFile(inputDir + s"/supplier-$dataScale.tbl*").map(_.split('|')).map(p =>
       Supplier(p(0).trim.toInt, p(1).trim, p(2).trim, p(3).trim.toInt,
         p(4).trim, p(5).trim.toDouble, p(6).trim)).toDF())
 
   // for implicits
-  val customer = dfMap.get("customer").get
-  val lineitem = dfMap.get("lineitem").get
-  val nation = dfMap.get("nation").get
-  val region = dfMap.get("region").get
-  val order = dfMap.get("order").get
-  val part = dfMap.get("part").get
-  val partsupp = dfMap.get("partsupp").get
-  val supplier = dfMap.get("supplier").get
+  val customer: DataFrame = dfMap("customer")
+  val lineitem: DataFrame = dfMap("lineitem")
+  val nation: DataFrame = dfMap("nation")
+  val region: DataFrame = dfMap("region")
+  val order: DataFrame = dfMap("order")
+  val part: DataFrame = dfMap("part")
+  val partsupp: DataFrame = dfMap("partsupp")
+  val supplier: DataFrame = dfMap("supplier")
 
   dfMap.foreach {
     case (key, value) => value.createOrReplaceTempView(key)

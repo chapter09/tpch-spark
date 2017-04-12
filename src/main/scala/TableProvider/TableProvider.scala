@@ -9,14 +9,18 @@ import org.apache.spark.sql.{DataFrame, SparkSession}
 
 abstract class TpchTable(tpchConf: TpchConf) {
 
-  protected val dataScale: Int = tpchConf.getInt("all.data-scale")
-  protected val inputDir: String = tpchConf.getString("all.input-dir")
+  val dataScale: Int = tpchConf.getInt("all.data-scale")
+  val inputDir: String = tpchConf.getString("all.input-dir")
 
   def create(sparkSession: SparkSession): DataFrame
 
 }
 
 class Customer(conf: TpchConf) extends TpchTable(conf)  {
+
+  val Customer: Unit = {
+    println("constructor")
+  }
 
   override def create(sparkSession: SparkSession): DataFrame = {
 

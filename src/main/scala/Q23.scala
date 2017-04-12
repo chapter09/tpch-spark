@@ -15,12 +15,7 @@ class Q23 extends TpchQuery {
   def execute(sc: SparkContext,
     schemaProvider: TpchSchemaProvider,
     conf: TpchConf): DataFrame = {
-
-    // this is used to implicitly convert an RDD to a DataFrame.
-//    val sqlContext = new org.apache.spark.sql.SQLContext(sc)
-//    import sqlContext.implicits._
-//    import schemaProvider._
-
+    
     val warehouseLocation = conf.getString("all.hdfs") + conf.getString("all.input-dir")
 
     val spark = SparkSession
