@@ -41,8 +41,10 @@ class Q23 extends TpchQuery {
       .asInstanceOf[TpchTable]
       .create(spark)
 
-    sql(f"SELECT * FROM ${conf.getString("Q23.table-a")} WHERE c_custkey=12")
-    sql(f"SELECT * FROM ${conf.getString("Q23.table-b")} WHERE l_orderkey=12")
+//    sql(f"SELECT * FROM ${conf.getString("Q23.table-a")} WHERE c_custkey=12")
+//    sql(f"SELECT * FROM ${conf.getString("Q23.table-b")} WHERE l_orderkey=12")
+
+    sql(conf.getString("Q23.query"))
 
   }
 

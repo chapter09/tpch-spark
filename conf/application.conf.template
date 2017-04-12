@@ -14,7 +14,6 @@ Q23 {
   table-a: "customer",
   table-b: "lineitem",
   operator: "join",
-  condition: ""
+  query: ""
 }
-
 
