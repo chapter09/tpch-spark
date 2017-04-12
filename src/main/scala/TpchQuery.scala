@@ -52,7 +52,7 @@ object TpchQuery {
     // if set write results to hdfs, if null write to stdout
     // val OUTPUT_DIR: String = "/tpch"
     /*val OUTPUT_DIR: String = "file://" + new File(".").getAbsolutePath() + "/dbgen/output"*/
-    val OUTPUT_DIR = tpchConf.getString("all.output-dir")
+    val OUTPUT_DIR = tpchConf.getString("all.hdfs") + tpchConf.getString("all.output-dir")
 
     val results = new ListBuffer[(String, Float)]
 
@@ -88,7 +88,7 @@ object TpchQuery {
 
         // read files from local FS
     /*val INPUT_DIR = "file://" + new File(".").getAbsolutePath() + "/dbgen"*/
-    val INPUT_DIR = tpchConf.getString("all.input-dir")
+    val INPUT_DIR = tpchConf.getString("all.hdfs") + tpchConf.getString("all.input-dir")
 
     val schemaProvider = new TpchSchemaProvider(sc, INPUT_DIR)
 

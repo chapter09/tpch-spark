@@ -2,6 +2,7 @@ package main.scala
 
 import org.apache.spark.SparkContext
 import org.apache.spark.sql.{DataFrame, SparkSession}
+import TableProvider._
 
 /**
   * TPC-H Query X
@@ -20,7 +21,7 @@ class Q23 extends TpchQuery {
 //    import sqlContext.implicits._
 //    import schemaProvider._
 
-    val warehouseLocation = conf.getString("all.input-dir")
+    val warehouseLocation = conf.getString("all.hdfs") + conf.getString("all.input-dir")
 
     val spark = SparkSession
       .builder()
@@ -31,24 +32,22 @@ class Q23 extends TpchQuery {
     import spark.implicits._
     import spark.sql
 
-    sql("CREATE EXTERNAL TABLE IF NOT EXISTS customer "
-    + "(c_custkey Int, c_name String, c_address String, c_nationkey Int, "
-    + "c_phone String, c_acctbal Double, c_mktsegment String, c_comment String) "
-    + "ROW FORMAT DELIMITED FIELDS TERMINATED BY '\\|' "
-    + "STORED AS TEXTFILE LOCATION '/tpch/customer.tbl'")
+    val tableA = Class.forName("main.scala.TableProvider." +
+      conf.getString("Q23.table-a").capitalize)
+      .getConstructor()
+      .newInstance(conf)
+      .asInstanceOf[TpchTable]
+      .create(spark)
 
-//    sql(f"LOAD DATA INPATH '/tpch/customer.tbl' INTO TABLE customer")
+    val tableB = Class.forName("main.scala.TableProvider." +
+      conf.getString("Q23.table-b").capitalize)
+      .getConstructor()
+      .newInstance(conf)
+      .asInstanceOf[TpchTable]
+      .create(spark)
 
-    sql("SELECT * FROM customer WHERE c_custkey=12")
-
-
-
-    //val tableA = conf.getString("Q23.table-a")
-    //val tableB = conf.getString("Q23.table-b")
-
-    //val sqlDF = spark.sql(s"SELECT * from $Partsupp")
-    //sqlDF.show()
-    //sqlDF
+    sql(f"SELECT * FROM ${conf.getString("Q23.table-a")} WHERE c_custkey=12")
+    sql(f"SELECT * FROM ${conf.getString("Q23.table-b")}")
 
   }
 
