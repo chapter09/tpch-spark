@@ -34,14 +34,14 @@ class Q23 extends TpchQuery {
 
     val tableA = Class.forName("main.scala.TableProvider." +
       conf.getString("Q23.table-a").capitalize)
-      .getConstructor(classOf[TpchTable])
+      .getConstructor(conf.getClass)
       .newInstance(conf)
       .asInstanceOf[TpchTable]
       .create(spark)
 
     val tableB = Class.forName("main.scala.TableProvider." +
       conf.getString("Q23.table-b").capitalize)
-      .getConstructor(classOf[TpchTable])
+      .getConstructor(conf.getClass)
       .newInstance(conf)
       .asInstanceOf[TpchTable]
       .create(spark)
