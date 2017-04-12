@@ -1,16 +1,20 @@
 all {
-  input-dir: "hdfs://10.12.3.36:8020/tpch/",
-  output-dir: "hdfs://10.12.3.36:8020/tpch/",
-  query-num: 23
+  hdfs: "hdfs://10.12.3.36:8020/",
+  input-dir: "/tpch/",
+  output-dir: "/tpch/",
+  query-num: 23,
+  data-scale: 1
 }
 
-//
-//customer, lineitem, nation, region
-//order, part, partsupp, supplier
+// Table list:
+// customer, lineitem, nation, region
+// order, part, partsupp, supplier
 
 Q23 {
   table-a: "customer",
   table-b: "lineitem",
-  operator: "join"
+  operator: "join",
+  condition: ""
 }
+
 
