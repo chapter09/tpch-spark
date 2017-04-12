@@ -39,7 +39,8 @@ class Q23 extends TpchQuery {
 
 //    sql(f"LOAD DATA INPATH '/tpch/customer.tbl' INTO TABLE customer")
 
-    sql("SELECT * FROM customer")
+    sql("SELECT * FROM customer WHERE c_custkey=12")
+
 
 
     //val tableA = conf.getString("Q23.table-a")
