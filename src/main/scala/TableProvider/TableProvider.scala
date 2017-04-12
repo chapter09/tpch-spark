@@ -18,10 +18,6 @@ abstract class TpchTable(tpchConf: TpchConf) {
 
 class Customer(conf: TpchConf) extends TpchTable(conf)  {
 
-  val Customer: Unit = {
-    println("constructor")
-  }
-
   override def create(sparkSession: SparkSession): DataFrame = {
 
     sparkSession.sql("CREATE EXTERNAL TABLE IF NOT EXISTS customer " +

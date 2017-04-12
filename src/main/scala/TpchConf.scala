@@ -7,7 +7,7 @@ import com.typesafe.config.{Config, ConfigFactory}
 /**
   * Created by hao on 2017-04-02.
   */
-class TpchConf() {
+class TpchConf(path: String = null) {
 
   private val conf = loadConf()
 
@@ -17,8 +17,11 @@ class TpchConf() {
     *  load the configuration file
     */
   private def loadConf(): Config = {
-    val confPath = new File(getCurrentDirectory, "/conf/application.conf")
-    ConfigFactory.parseFile(confPath)
+    if (path == null || path.isEmpty) {
+      ConfigFactory.parseFile(new File(getCurrentDirectory, "/conf/application.conf"))
+    } else {
+      ConfigFactory.parseFile(new File(path))
+    }
   }
 
   def getString(key: String): String = {

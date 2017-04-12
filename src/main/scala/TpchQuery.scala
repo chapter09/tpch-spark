@@ -22,7 +22,7 @@ abstract class TpchQuery {
     className.split("\\.").last.replaceAll("\\$", "")
   }
 
-  def getName(): String = escapeClassName(this.getClass.getName)
+  val getName: String = escapeClassName(this.getClass.getName)
 
   /**
    *  implemented in children classes and hold the actual query
@@ -66,11 +66,11 @@ object TpchQuery {
     for (queryNo <- fromNum to toNum) {
       val t0 = System.nanoTime()
       val query = Class.forName(f"main.scala.Q$queryNo%02d").newInstance.asInstanceOf[TpchQuery]
-      outputDF(query.execute(sc, schemaProvider, tpchConf), OUTPUT_DIR, query.getName())
+      outputDF(query.execute(sc, schemaProvider, tpchConf), OUTPUT_DIR, query.getName)
 
       val t1 = System.nanoTime()
       val elapsed = (t1 - t0) / 1000000000.0f // second
-      results += new Tuple2(query.getName(), elapsed)
+      results += Tuple2(query.getName, elapsed)
     }
 
     results
@@ -79,7 +79,7 @@ object TpchQuery {
 
   def main(args: Array[String]): Unit = {
 
-    val tpchConf = new TpchConf()
+    val tpchConf = new TpchConf(args(0))
 
     val queryNum = tpchConf.getInt("all.query-num")
 
