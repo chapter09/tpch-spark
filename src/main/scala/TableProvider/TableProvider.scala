@@ -1,5 +1,6 @@
-package main.scala
+package main.scala.TableProvider
 
+import main.scala._
 import org.apache.spark.sql.{DataFrame, SparkSession}
 
 /**
