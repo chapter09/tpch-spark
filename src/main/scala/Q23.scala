@@ -20,7 +20,7 @@ class Q23 extends TpchQuery {
 //    import sqlContext.implicits._
 //    import schemaProvider._
 
-    val warehouseLocation = conf.getString("all.input-dir")
+    val warehouseLocation = conf.getString("all.hdfs") + conf.getString("all.input-dir")
 
     val spark = SparkSession
       .builder()
@@ -39,15 +39,7 @@ class Q23 extends TpchQuery {
 
 //    sql(f"LOAD DATA INPATH '/tpch/customer.tbl' INTO TABLE customer")
 
-    sql("SELECT * FROM customer")
-
-
-    //val tableA = conf.getString("Q23.table-a")
-    //val tableB = conf.getString("Q23.table-b")
-
-    //val sqlDF = spark.sql(s"SELECT * from $Partsupp")
-    //sqlDF.show()
-    //sqlDF
+    sql("SELECT * FROM customer WHERE c_custkey=12")
 
   }
 
