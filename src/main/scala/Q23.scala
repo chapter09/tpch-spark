@@ -15,7 +15,7 @@ class Q23 extends TpchQuery {
   def execute(sc: SparkContext,
     schemaProvider: TpchSchemaProvider,
     conf: TpchConf): DataFrame = {
-    
+
     val warehouseLocation = conf.getString("all.hdfs") + conf.getString("all.input-dir")
 
     val spark = SparkSession
@@ -42,7 +42,7 @@ class Q23 extends TpchQuery {
       .create(spark)
 
     sql(f"SELECT * FROM ${conf.getString("Q23.table-a")} WHERE c_custkey=12")
-    sql(f"SELECT * FROM ${conf.getString("Q23.table-b")}")
+    sql(f"SELECT * FROM ${conf.getString("Q23.table-b")}WHERE l_orderkey=12")
 
   }
 
