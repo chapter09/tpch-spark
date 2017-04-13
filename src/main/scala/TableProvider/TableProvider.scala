@@ -16,11 +16,14 @@ abstract class TpchTable(tpchConf: TpchConf) {
 
 }
 
+
 class Customer(conf: TpchConf) extends TpchTable(conf)  {
 
   override def create(sparkSession: SparkSession): DataFrame = {
 
-    sparkSession.sql("DROP TABLE IF EXISTS customer; CREATE EXTERNAL TABLE customer " +
+    sparkSession.sql("DROP TABLE IF EXISTS customer")
+
+    sparkSession.sql("CREATE EXTERNAL TABLE customer " +
       "(c_custkey Int, c_name String, c_address String, c_nationkey Int, " +
       "c_phone String, c_acctbal Double, c_mktsegment String, c_comment String) " +
       "ROW FORMAT DELIMITED FIELDS TERMINATED BY '\\|' " +
