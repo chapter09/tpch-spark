@@ -37,7 +37,8 @@ class Lineitem(conf: TpchConf) extends TpchTable(conf) {
 
   override def create(sparkSession: SparkSession): DataFrame = {
 
-    sparkSession.sql("DROP TABLE IF EXISTS lineitem; CREATE EXTERNAL TABLE lineitem " +
+    sparkSession.sql("DROP TABLE IF EXISTS lineitem")
+    sparkSession.sql("CREATE EXTERNAL TABLE lineitem " +
       "(l_orderkey Int, l_partkey Int, l_suppkey Int, l_linenumber Int, " +
       "l_quantity Double, l_extendedprice Double, l_discount Double, l_tax Double, " +
       "l_returnflag String, l_linestatus String, l_shipdate String, l_commitdate String, " +
