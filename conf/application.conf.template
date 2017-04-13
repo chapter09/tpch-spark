@@ -14,6 +14,11 @@ Q23 {
   table-a: "customer",
   table-b: "lineitem",
   operator: "join",
-  query: ""
+  //query: "SELECT order.o_orderkey, customer.c_name, order.o_orderdate FROM order INNER JOIN customer ON order.o_custkey=customer.c_custkey"
+  //query: "SELECT order.o_orderkey, lineitem.l_linestatus FROM order INNER JOIN lineitem ON order.o_orderkey=lineitem.l_orderkey"
+  //query: "SELECT supplier.s_name, nation.n_name FROM supplier INNER JOIN nation ON supplier.s_nationkey=nation.n_nationkey"
+  //query: "SELECT supplier.s_name, nation.n_name, partsupp.ps_comment FROM (partsupp INNER JOIN supplier ON partsupp.ps_suppkey=supplier.s_suppkey) INNER JOIN nation ON supplier.s_nationkey=nation.n_nationkey"
+  //query: "SELECT supplier.s_name, nation.n_name, partsupp.ps_comment FROM (supplier INNER JOIN nation ON supplier.s_nationkey=nation.n_nationkey) INNER JOIN partsupp ON partsupp.ps_suppkey=supplier.s_suppkey"
+  query: "SELECT customer.c_name FROM customer WHERE customer.c_custkey=12"
 }
 
