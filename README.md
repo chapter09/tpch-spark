@@ -12,8 +12,8 @@ savvas@purdue.edu
 
 ### Todo
 
-* [] Clean tables
-* [] Load tables specifically
+*[ ] Clean tables
+*[ ] Load tables specifically
 
 ### Running
 
