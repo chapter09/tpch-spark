@@ -9,6 +9,12 @@ ssavvides@us.ibm.com
 
 savvas@purdue.edu
 
+
+### Todo
+
+* [] Clean tables
+* [] Load tables specifically
+
 ### Running
 
 First compile using:
