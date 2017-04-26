@@ -25,7 +25,7 @@ class Customer(conf: TpchConf) extends TpchTable(conf)  {
       "(c_custkey Int, c_name String, c_address String, c_nationkey Int, " +
       "c_phone String, c_acctbal Double, c_mktsegment String, c_comment String) " +
       "ROW FORMAT DELIMITED FIELDS TERMINATED BY '\\|' " +
-      f"STORED AS TEXTFILE LOCATION '/$inputDir/customer-$dataScale.tbl'")
+      f"STORED AS TEXTFILE LOCATION '$inputDir/customer-$dataScale.tbl'")
   }
 
 }
@@ -41,7 +41,7 @@ class Lineitem(conf: TpchConf) extends TpchTable(conf) {
       "l_returnflag String, l_linestatus String, l_shipdate String, l_commitdate String, " +
       "l_receiptdate String, l_shipinstruct String, l_shipmode String, l_comment String) " +
       "ROW FORMAT DELIMITED FIELDS TERMINATED BY '\\|' " +
-      f"STORED AS TEXTFILE LOCATION '/$inputDir/lineitem-$dataScale.tbl'")
+      f"STORED AS TEXTFILE LOCATION '$inputDir/lineitem-$dataScale.tbl'")
   }
 
 }
