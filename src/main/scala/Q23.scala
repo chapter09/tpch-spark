@@ -16,7 +16,7 @@ class Q23 extends TpchQuery {
     schemaProvider: TpchSchemaProvider,
     conf: TpchConf): DataFrame = {
 
-    val warehouseLocation = conf.getString("all.hdfs") + conf.getString("all.input-dir")
+    val warehouseLocation = "/user/hive/warehouse"
 
     val spark = SparkSession
       .builder()
