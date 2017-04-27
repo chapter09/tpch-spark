@@ -24,8 +24,8 @@ class Customer(conf: TpchConf) extends TpchTable(conf)  {
     sparkSession.sql("CREATE EXTERNAL TABLE customer " +
       "(c_custkey Int, c_name String, c_address String, c_nationkey Int, " +
       "c_phone String, c_acctbal Double, c_mktsegment String, c_comment String) " +
-      "ROW FORMAT DELIMITED FIELDS TERMINATED BY '\\|' " +
-      f" LOCATION '$inputDir/customer-$dataScale.tbl'")
+      "ROW FORMAT DELIMITED FIELDS TERMINATED BY '|' " +
+      f"STORED AS TEXTFILE LOCATION '$inputDir/customer-$dataScale.tbl'")
   }
 
 }
@@ -40,7 +40,7 @@ class Lineitem(conf: TpchConf) extends TpchTable(conf) {
       "l_quantity Double, l_extendedprice Double, l_discount Double, l_tax Double, " +
       "l_returnflag String, l_linestatus String, l_shipdate String, l_commitdate String, " +
       "l_receiptdate String, l_shipinstruct String, l_shipmode String, l_comment String) " +
-      "ROW FORMAT DELIMITED FIELDS TERMINATED BY '\\|' " +
+      "ROW FORMAT DELIMITED FIELDS TERMINATED BY '|' " +
       f"STORED AS TEXTFILE LOCATION '$inputDir/lineitem-$dataScale.tbl'")
   }
 
