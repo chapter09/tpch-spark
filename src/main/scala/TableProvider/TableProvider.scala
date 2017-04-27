@@ -21,6 +21,8 @@ class Customer(conf: TpchConf) extends TpchTable(conf)  {
 
   override def create(sparkSession: SparkSession): DataFrame = {
 
+    sparkSession.sql("DROP TABLE IF EXISTS customer")
+
     sparkSession.sql("CREATE EXTERNAL TABLE customer " +
       "(c_custkey Int, c_name String, c_address String, c_nationkey Int, " +
       "c_phone String, c_acctbal Double, c_mktsegment String, c_comment String) " +
@@ -34,6 +36,8 @@ class Customer(conf: TpchConf) extends TpchTable(conf)  {
 class Lineitem(conf: TpchConf) extends TpchTable(conf) {
 
   override def create(sparkSession: SparkSession): DataFrame = {
+
+    sparkSession.sql("DROP TABLE IF EXISTS lineitem")
 
     sparkSession.sql("CREATE EXTERNAL TABLE lineitem " +
       "(l_orderkey Int, l_partkey Int, l_suppkey Int, l_linenumber Int, " +
