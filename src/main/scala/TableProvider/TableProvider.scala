@@ -14,14 +14,18 @@ abstract class TpchTable(tpchConf: TpchConf) {
 
   def create(sparkSession: SparkSession): DataFrame
 
+  def destroy(sparkSession: SparkSession): DataFrame
+
 }
 
 
 class Customer(conf: TpchConf) extends TpchTable(conf)  {
 
-  override def create(sparkSession: SparkSession): DataFrame = {
-
+  override def destroy(sparkSession: SparkSession): DataFrame = {
     sparkSession.sql("DROP TABLE IF EXISTS customer")
+  }
+
+  override def create(sparkSession: SparkSession): DataFrame = {
 
     sparkSession.sql("CREATE EXTERNAL TABLE customer " +
       "(c_custkey Int, c_name String, c_address String, c_nationkey Int, " +
@@ -35,9 +39,13 @@ class Customer(conf: TpchConf) extends TpchTable(conf)  {
 
 class Lineitem(conf: TpchConf) extends TpchTable(conf) {
 
-  override def create(sparkSession: SparkSession): DataFrame = {
+  override def destroy(sparkSession: SparkSession): DataFrame = {
 
     sparkSession.sql("DROP TABLE IF EXISTS lineitem")
+
+  }
+
+  override def create(sparkSession: SparkSession): DataFrame = {
 
     sparkSession.sql("CREATE EXTERNAL TABLE lineitem " +
       "(l_orderkey Int, l_partkey Int, l_suppkey Int, l_linenumber Int, " +
@@ -53,9 +61,13 @@ class Lineitem(conf: TpchConf) extends TpchTable(conf) {
 
 class Nation(conf: TpchConf) extends TpchTable(conf) {
 
-  override def create(sparkSession: SparkSession): DataFrame = {
+  override def destroy(sparkSession: SparkSession): DataFrame = {
 
     sparkSession.sql("DROP TABLE IF EXISTS nation")
+
+  }
+
+  override def create(sparkSession: SparkSession): DataFrame = {
 
     sparkSession.sql("CREATE EXTERNAL TABLE nation " +
       "(n_nationkey Int, n_name String, n_regionkey Int, n_comment String) " +
@@ -67,9 +79,13 @@ class Nation(conf: TpchConf) extends TpchTable(conf) {
 
 class Order(conf: TpchConf) extends TpchTable(conf) {
 
-  override def create(sparkSession: SparkSession): DataFrame = {
+  override def destroy(sparkSession: SparkSession): DataFrame = {
 
     sparkSession.sql("DROP TABLE IF EXISTS order")
+
+  }
+
+  override def create(sparkSession: SparkSession): DataFrame = {
 
     sparkSession.sql("CREATE EXTERNAL TABLE order " +
       "(o_orderkey Int, o_custkey Int, o_orderstatus String, " +
@@ -83,9 +99,13 @@ class Order(conf: TpchConf) extends TpchTable(conf) {
 
 class Part(conf: TpchConf) extends TpchTable(conf) {
 
-  override def create(sparkSession: SparkSession): DataFrame = {
+  override def destroy(sparkSession: SparkSession): DataFrame = {
 
     sparkSession.sql("DROP TABLE IF EXISTS part")
+
+  }
+
+  override def create(sparkSession: SparkSession): DataFrame = {
 
     sparkSession.sql("CREATE EXTERNAL TABLE part " +
       "(p_partkey Int, p_name String, p_mfgr String, p_brand String, " +
@@ -98,9 +118,13 @@ class Part(conf: TpchConf) extends TpchTable(conf) {
 
 class Partsupp(conf: TpchConf) extends TpchTable(conf) {
 
-  override def create(sparkSession: SparkSession): DataFrame = {
+  override def destroy(sparkSession: SparkSession): DataFrame = {
 
     sparkSession.sql("DROP TABLE IF EXISTS partsupp")
+
+  }
+
+  override def create(sparkSession: SparkSession): DataFrame = {
 
     sparkSession.sql("CREATE EXTERNAL TABLE partsupp " +
       "(ps_partkey Int, ps_suppkey Int, ps_availqty Int, ps_supplycost Double, ps_comment String) " +
@@ -112,9 +136,13 @@ class Partsupp(conf: TpchConf) extends TpchTable(conf) {
 
 class Region(conf: TpchConf) extends TpchTable(conf) {
 
-  override def create(sparkSession: SparkSession): DataFrame = {
+  override def destroy(sparkSession: SparkSession): DataFrame = {
 
     sparkSession.sql("DROP TABLE IF EXISTS region")
+
+  }
+
+  override def create(sparkSession: SparkSession): DataFrame = {
 
     sparkSession.sql("CREATE EXTERNAL TABLE region " +
       "(r_regionkey Int, r_name String, r_comment String) " +
@@ -126,9 +154,13 @@ class Region(conf: TpchConf) extends TpchTable(conf) {
 
 class Supplier(conf: TpchConf) extends TpchTable(conf) {
 
-  override def create(sparkSession: SparkSession): DataFrame = {
+  override def destroy(sparkSession: SparkSession): DataFrame = {
 
     sparkSession.sql("DROP TABLE IF EXISTS supplier")
+
+  }
+
+  override def create(sparkSession: SparkSession): DataFrame = {
 
     sparkSession.sql("CREATE EXTERNAL TABLE supplier " +
       "(s_suppkey Int, s_name String, s_address String, s_nationkey Int," +

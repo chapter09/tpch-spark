@@ -36,22 +36,16 @@ class Q23 extends TpchQuery {
         .create(spark)
     )
 
-//    val tableA = Class.forName("main.scala.TableProvider." +
-//    conf.getString("Q23.table-a").capitalize)
-//    .getConstructor(conf.getClass)
-//    .newInstance(conf)
-//    .asInstanceOf[TpchTable]
-//    .create(spark)
-//
-//    val tableB = Class.forName("main.scala.TableProvider." +
-//    conf.getString("Q23.table-b").capitalize)
-//    .getConstructor(conf.getClass)
-//    .newInstance(conf)
-//    .asInstanceOf[TpchTable]
-//    .create(spark)
+    val df = sql(conf.getString("Q23.query"))
 
-    sql(conf.getString("Q23.query"))
+    tableList.foreach((table: String) =>
+      Class.forName("main.scala.TableProvider." + table.capitalize)
+        .getConstructor(conf.getClass)
+        .newInstance(conf)
+        .asInstanceOf[TpchTable]
+        .destroy(spark)
+    )
 
+    df
   }
-
 }
