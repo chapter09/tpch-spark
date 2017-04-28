@@ -11,8 +11,11 @@ all {
 // order, part, partsupp, supplier
 
 Q23 {
-  table-a: "customer",
-  table-b: "lineitem",
+  table-list: [
+    "nation",
+    "partsupp",
+    "supplier",
+    ],
   operator: "join",
   //query: "SELECT order.o_orderkey, customer.c_name, order.o_orderdate FROM order INNER JOIN customer ON order.o_custkey=customer.c_custkey"
   //query: "SELECT order.o_orderkey, lineitem.l_linestatus FROM order INNER JOIN lineitem ON order.o_orderkey=lineitem.l_orderkey"

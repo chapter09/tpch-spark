@@ -1,8 +1,9 @@
 package main.scala
 
 import java.io.File
-
 import com.typesafe.config.{Config, ConfigFactory}
+import collection.JavaConverters._
+
 
 /**
   * Created by hao on 2017-04-02.
@@ -38,6 +39,10 @@ class TpchConf(path: String = null) {
 
   def getAnyRef(key: String): Any = {
     conf.getAnyRef(key)
+  }
+
+  def getStringList(key: String): List[String] = {
+    conf.getStringList(key).asScala.toList
   }
 
 }

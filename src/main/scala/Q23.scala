@@ -27,22 +27,28 @@ class Q23 extends TpchQuery {
     import spark.implicits._
     import spark.sql
 
-    val tableA = Class.forName("main.scala.TableProvider." +
-    conf.getString("Q23.table-a").capitalize)
-    .getConstructor(conf.getClass)
-    .newInstance(conf)
-    .asInstanceOf[TpchTable]
-    .create(spark)
+    val tableList = conf.getStringList("Q23.table-list")
+    tableList.foreach((table: String) =>
+      Class.forName("main.scala.TableProvider." + table.capitalize)
+        .getConstructor(conf.getClass)
+        .newInstance(conf)
+        .asInstanceOf[TpchTable]
+        .create(spark)
+    )
 
-    val tableB = Class.forName("main.scala.TableProvider." +
-    conf.getString("Q23.table-b").capitalize)
-    .getConstructor(conf.getClass)
-    .newInstance(conf)
-    .asInstanceOf[TpchTable]
-    .create(spark)
-
-//    sql(f"SELECT * FROM ${conf.getString("Q23.table-a")} WHERE c_custkey=12")
-//    sql(f"SELECT * FROM ${conf.getString("Q23.table-b")} WHERE l_orderkey=12")
+//    val tableA = Class.forName("main.scala.TableProvider." +
+//    conf.getString("Q23.table-a").capitalize)
+//    .getConstructor(conf.getClass)
+//    .newInstance(conf)
+//    .asInstanceOf[TpchTable]
+//    .create(spark)
+//
+//    val tableB = Class.forName("main.scala.TableProvider." +
+//    conf.getString("Q23.table-b").capitalize)
+//    .getConstructor(conf.getClass)
+//    .newInstance(conf)
+//    .asInstanceOf[TpchTable]
+//    .create(spark)
 
     sql(conf.getString("Q23.query"))
 
