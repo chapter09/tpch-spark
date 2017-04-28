@@ -30,3 +30,4 @@ tpch-spark.iml
 conf/application.conf
 
 metastore_db/
+scripts/env/

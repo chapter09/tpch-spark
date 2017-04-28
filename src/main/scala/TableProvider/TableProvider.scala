@@ -54,10 +54,13 @@ class Lineitem(conf: TpchConf) extends TpchTable(conf) {
 class Nation(conf: TpchConf) extends TpchTable(conf) {
 
   override def create(sparkSession: SparkSession): DataFrame = {
+
+    sparkSession.sql("DROP TABLE IF EXISTS nation")
+
     sparkSession.sql("DROP TABLE IF EXISTS nation; CREATE EXTERNAL TABLE nation " +
       "(n_nationkey Int, n_name String, n_regionkey Int, n_comment String) " +
       "ROW FORMAT DELIMITED FIELDS TERMINATED BY '\\|' " +
-      f"STORED AS TEXTFILE LOCATION '$inputDir/nation-$dataScale.tbl'")
+      f"STORED AS TEXTFILE LOCATION '$inputDir/nation-$dataScale'")
   }
 }
 
@@ -65,12 +68,15 @@ class Nation(conf: TpchConf) extends TpchTable(conf) {
 class Order(conf: TpchConf) extends TpchTable(conf) {
 
   override def create(sparkSession: SparkSession): DataFrame = {
+
+    sparkSession.sql("DROP TABLE IF EXISTS order")
+
     sparkSession.sql("DROP TABLE IF EXISTS order; CREATE EXTERNAL TABLE order " +
       "(o_orderkey Int, o_custkey Int, o_orderstatus String, " +
       "o_totalprice Double, o_orderdate String, o_orderpriority String, " +
       "o_clerk String,  o_shippriority Int, o_comment String) " +
       "ROW FORMAT DELIMITED FIELDS TERMINATED BY '\\|' " +
-      f"STORED AS TEXTFILE LOCATION '$inputDir/order-$dataScale.tbl'")
+      f"STORED AS TEXTFILE LOCATION '$inputDir/order-$dataScale'")
   }
 }
 
@@ -82,7 +88,7 @@ class Part(conf: TpchConf) extends TpchTable(conf) {
       "(p_partkey Int, p_name String, p_mfgr String, p_brand String, " +
       "p_type String, p_size Int, p_container String, p_retailprice Double, p_comment String) " +
       "ROW FORMAT DELIMITED FIELDS TERMINATED BY '\\|' " +
-      f"STORED AS TEXTFILE LOCATION '$inputDir/part-$dataScale.tbl'")
+      f"STORED AS TEXTFILE LOCATION '$inputDir/part-$dataScale'")
   }
 }
 
@@ -93,7 +99,7 @@ class Partsupp(conf: TpchConf) extends TpchTable(conf) {
     sparkSession.sql("DROP TABLE IF EXISTS partsupp; CREATE EXTERNAL TABLE partsupp " +
       "(ps_partkey Int, ps_suppkey Int, ps_availqty Int, ps_supplycost Double, ps_comment String) " +
       "ROW FORMAT DELIMITED FIELDS TERMINATED BY '\\|' " +
-      f"STORED AS TEXTFILE LOCATION '$inputDir/partsupp-$dataScale.tbl'")
+      f"STORED AS TEXTFILE LOCATION '$inputDir/partsupp-$dataScale'")
   }
 }
 
@@ -104,7 +110,7 @@ class Region(conf: TpchConf) extends TpchTable(conf) {
     sparkSession.sql("DROP TABLE IF EXISTS region; CREATE EXTERNAL TABLE region " +
       "(r_regionkey Int, r_name String, r_comment String) " +
       "ROW FORMAT DELIMITED FIELDS TERMINATED BY '\\|' " +
-      f"STORED AS TEXTFILE LOCATION '$inputDir/region-$dataScale.tbl'")
+      f"STORED AS TEXTFILE LOCATION '$inputDir/region-$dataScale'")
   }
 }
 
@@ -116,7 +122,7 @@ class Supplier(conf: TpchConf) extends TpchTable(conf) {
       "(s_suppkey Int, s_name String, s_address String, s_nationkey Int," +
       " s_phone String, s_acctbal Double, s_comment String) " +
       "ROW FORMAT DELIMITED FIELDS TERMINATED BY '\\|' " +
-      f"STORED AS TEXTFILE LOCATION '$inputDir/supplier-$dataScale.tbl'")
+      f"STORED AS TEXTFILE LOCATION '$inputDir/supplier-$dataScale'")
   }
 }
 

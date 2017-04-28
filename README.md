@@ -15,6 +15,14 @@ savvas@purdue.edu
 - [ ] Clean tables
 - [ ] Load tables specifically
 
+### Pre-run
+
+Setup env `HADOOP_HOME` as:
+
+```shell
+export HADOOP_HOME=/home/ubuntu/hadoop-2.7.3
+```
+
 ### Running
 
 First compile using:

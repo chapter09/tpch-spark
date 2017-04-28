@@ -1,0 +1,2 @@
+pyhocon==0.3.35
+pyparsing==2.2.0
