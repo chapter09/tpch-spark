@@ -34,7 +34,7 @@ def parse_config():
 
 def raw_data_list(data_scale):
     dbgen_path = os.path.abspath("../dbgen/")
-    return [os.path.join(dbgen_path, d + "-" + data_scale + ".tbl") for d in RAW_DATA]
+    return [os.path.join(dbgen_path, d + "-" + str(data_scale) + ".tbl") for d in RAW_DATA]
 
 
 def main():

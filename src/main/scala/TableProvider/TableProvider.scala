@@ -84,6 +84,9 @@ class Order(conf: TpchConf) extends TpchTable(conf) {
 class Part(conf: TpchConf) extends TpchTable(conf) {
 
   override def create(sparkSession: SparkSession): DataFrame = {
+
+    sparkSession.sql("DROP TABLE IF EXISTS part")
+
     sparkSession.sql("DROP TABLE IF EXISTS part; CREATE EXTERNAL TABLE part " +
       "(p_partkey Int, p_name String, p_mfgr String, p_brand String, " +
       "p_type String, p_size Int, p_container String, p_retailprice Double, p_comment String) " +
@@ -96,6 +99,9 @@ class Part(conf: TpchConf) extends TpchTable(conf) {
 class Partsupp(conf: TpchConf) extends TpchTable(conf) {
 
   override def create(sparkSession: SparkSession): DataFrame = {
+
+    sparkSession.sql("DROP TABLE IF EXISTS partsupp")
+
     sparkSession.sql("DROP TABLE IF EXISTS partsupp; CREATE EXTERNAL TABLE partsupp " +
       "(ps_partkey Int, ps_suppkey Int, ps_availqty Int, ps_supplycost Double, ps_comment String) " +
       "ROW FORMAT DELIMITED FIELDS TERMINATED BY '\\|' " +
@@ -107,6 +113,9 @@ class Partsupp(conf: TpchConf) extends TpchTable(conf) {
 class Region(conf: TpchConf) extends TpchTable(conf) {
 
   override def create(sparkSession: SparkSession): DataFrame = {
+
+    sparkSession.sql("DROP TABLE IF EXISTS region")
+
     sparkSession.sql("DROP TABLE IF EXISTS region; CREATE EXTERNAL TABLE region " +
       "(r_regionkey Int, r_name String, r_comment String) " +
       "ROW FORMAT DELIMITED FIELDS TERMINATED BY '\\|' " +
@@ -118,6 +127,9 @@ class Region(conf: TpchConf) extends TpchTable(conf) {
 class Supplier(conf: TpchConf) extends TpchTable(conf) {
 
   override def create(sparkSession: SparkSession): DataFrame = {
+
+    sparkSession.sql("DROP TABLE IF EXISTS supplier")
+
     sparkSession.sql("DROP TABLE IF EXISTS supplier; CREATE EXTERNAL TABLE supplier " +
       "(s_suppkey Int, s_name String, s_address String, s_nationkey Int," +
       " s_phone String, s_acctbal Double, s_comment String) " +
