@@ -13,7 +13,9 @@ savvas@purdue.edu
 ### Todo
 
 - [ ] Clean tables
-- [ ] Load tables specifically
+- [x] Load tables specifically
+- [ ] App Name
+- [ ] Independent SQL scripts
 
 ### Pre-run
 
