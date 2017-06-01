@@ -35,10 +35,21 @@ sudo pip3 install -r requirements.txt
 
 #### Upload to HDFS
 
+A `Scale Factor` is defined as `SF` in `upload-to-hdfs.py`. 
+For example, if `SF` is set as 4, then the script will create data sets from 
+scale 1 to scale 4.
+
 Under `./scripts`
 
 ```python
 chmod +x upload-to-hdfs.py
+./upload-to-hdfs.py
+```
+Since the Hive reads a table as this pattern `path/table-name/table-name.txt`,
+the uploaded tables will be kept as the example below:
+
+```shell
+/tpch/customer-1/customer-1.txt
 ```
 
 
