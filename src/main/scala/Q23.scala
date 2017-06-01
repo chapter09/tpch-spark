@@ -22,6 +22,11 @@ class Q23 extends TpchQuery {
       .builder()
       .config("spark.sql.warehouse.dir", warehouseLocation)
       .config("spark.executor.cores", "1")
+<<<<<<< HEAD
+=======
+      .config("spark.executor.instances", "4")
+      .config("spark.executor.memory", "2G")
+>>>>>>> acf4d864956710ce81a857ea4aa459cda3da100b
       .enableHiveSupport()
       .getOrCreate()
 

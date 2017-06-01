@@ -85,7 +85,9 @@ object TpchQuery {
     val appSuffix = tpchConf.getString("all.app-suffix")
 
     val sparkConf = new SparkConf()
-      .setAppName(f"Spark TPCH Query-$queryNum-$appSuffix")
+      .set("spark.executor.cores", "1")
+      .setAppName(f"TPCH Q$queryNum-$appSuffix")
+
     val sc = new SparkContext(sparkConf)
 
     // read files from local FS
