@@ -15,6 +15,7 @@ RAW_DATA = [
     "region",
     "supplier"]
 
+SF = 5
 
 def run(cmd):
     return subprocess.Popen(cmd, shell=True, cwd=os.environ["HADOOP_HOME"])
@@ -35,30 +36,40 @@ def parse_config():
     return ConfigFactory.parse_file('../conf/application.conf')
 
 
+def dbgen(scale):
+    print("Generating DB with scale " + str(scale))
+    p = subprocess.Popen(
+        "./dbgen -qf -s " + str(scale), shell=True, cwd="../dbgen/")
+    p.wait()
+
+
 def main():
     if not path.exists(os.environ["HADOOP_HOME"]):
         print("Please Specify HADOOP_HOME")
         exit(0)
 
     conf = parse_config()
-    data_scale = conf.get_int("all.data-scale")
     input_dir = conf.get_string("all.input-dir")
     dbgen_path = path.abspath("../dbgen/")
 
-    procs = []
-    for d in RAW_DATA:
-        procs.append(mkdir(input_dir + "/" + d + "-" + str(data_scale)))
+    for data_scale in range(1, SF+1):
 
-    [p.wait() for p in procs]
+        dbgen(data_scale)
 
-    procs = []
+        procs = []
+        for d in RAW_DATA:
+            procs.append(mkdir(input_dir + "/" + d + "-" + str(data_scale)))
 
-    for d in RAW_DATA:
-        procs.append(put(path.join(
-            dbgen_path, d + "-" + str(data_scale) + ".tbl"),
-            input_dir + "/" + d + "-" + data_scale + ".txt"))
+        [p.wait() for p in procs]
 
-    [p.wait() for p in procs]
+        procs = []
+
+        for d in RAW_DATA:
+            procs.append(put(path.join(
+                dbgen_path, d + ".tbl"),
+                input_dir + "/" + d + "-" + str(data_scale) + ".txt"))
+
+        [p.wait() for p in procs]
 
 
 if __name__ == '__main__':
