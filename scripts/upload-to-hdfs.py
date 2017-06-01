@@ -52,24 +52,28 @@ def main():
     input_dir = conf.get_string("all.input-dir")
     dbgen_path = path.abspath("../dbgen/")
 
-    for data_scale in range(1, SF+1):
+    try:
+        for data_scale in range(1, SF+1):
 
-        dbgen(data_scale)
+            dbgen(data_scale)
 
-        procs = []
-        for d in RAW_DATA:
-            procs.append(mkdir(input_dir + "/" + d + "-" + str(data_scale)))
+            procs = []
+            for d in RAW_DATA:
+                procs.append(mkdir(input_dir + "/" + d + "-" + str(data_scale)))
 
-        [p.wait() for p in procs]
+            [p.wait() for p in procs]
 
-        procs = []
+            procs = []
 
-        for d in RAW_DATA:
-            procs.append(put(path.join(
-                dbgen_path, d + ".tbl"),
-                input_dir + "/" + d + "-" + str(data_scale) + ".txt"))
+            for d in RAW_DATA:
+                procs.append(put(path.join(dbgen_path, d + ".tbl"),
+                                 input_dir + "/" + d + "-" + str(data_scale)
+                                 + "/" + d + "-" + str(data_scale) + ".txt"))
 
-        [p.wait() for p in procs]
+            [p.wait() for p in procs]
+    except KeyboardInterrupt:
+        print("Keyboard Interrupt")
+        exit(0)
 
 
 if __name__ == '__main__':
