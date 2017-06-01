@@ -1,3 +1,18 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [tpch-spark](#tpch-spark)
+    - [Todo](#todo)
+    - [Pre-run](#pre-run)
+      - [Generate dataset](#generate-dataset)
+      - [Upload to HDFS](#upload-to-hdfs)
+    - [Running](#running)
+    - [Application.conf](#applicationconf)
+    - [Other Implementations](#other-implementations)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # tpch-spark
 
 TPC-H queries implemented in Spark using the DataFrames API.
