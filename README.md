@@ -3,13 +3,6 @@
 TPC-H queries implemented in Spark using the DataFrames API.
 Tested under Spark 2.0.0
 
-Savvas Savvides
-
-ssavvides@us.ibm.com
-
-savvas@purdue.edu
-
-
 ### Todo
 
 - [ ] Clean tables
@@ -103,3 +96,9 @@ Q23 {
 2. TPC-H for Hive (https://issues.apache.org/jira/browse/hive-600)
 
 3. TPC-H for PIG (https://github.com/ssavvides/tpch-pig)
+
+
+
+### Acknowledgements
+
+This original repo is thanks to Savvas Savvides (ssavvides@us.ibm.com, savvas@purdue.edu)                                                            
