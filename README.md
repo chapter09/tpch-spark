@@ -25,6 +25,23 @@ Setup env `HADOOP_HOME` as:
 export HADOOP_HOME=/home/ubuntu/hadoop-2.7.3
 ```
 
+#### Generate dataset
+
+Under `./scripts`
+
+```python
+sudo pip3 install -r requirements.txt
+```
+
+#### Upload to HDFS
+
+Under `./scripts`
+
+```python
+chmod +x upload-to-hdfs.py
+```
+
+
 ### Running
 
 First compile using:
