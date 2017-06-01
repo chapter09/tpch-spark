@@ -3,7 +3,8 @@ all {
   input-dir: "/tpch/",
   output-dir: "/tpch/",
   query-num: 23,
-  data-scale: 1
+  data-scale: 1,
+  app-suffix: ""
 }
 
 // Table list:
