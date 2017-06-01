@@ -17,18 +17,21 @@ RAW_DATA = [
 
 
 def run(cmd):
-    return subprocess.run(cmd, shell=True, cwd=os.environ["HADOOP_HOME"])
+    return subprocess.Popen(cmd, shell=True, cwd=os.environ["HADOOP_HOME"])
 
 
 def put(f, dst, opts=None):
+    print("Upload %s to %s"% (f, dst))
     return run("./bin/hdfs dfs -put %s %s" % (f, dst))
 
 
 def mkdir(p):
+    print("Creating HDFS directory: " + p)
     return run("./bin/hdfs dfs -mkdir -p %s" % p)
 
 
 def parse_config():
+    print("Parsing config file")
     return ConfigFactory.parse_file('../conf/application.conf')
 
 
@@ -44,9 +47,10 @@ def main():
 
     procs = []
     for d in RAW_DATA:
-        procs.append(mkdir(input_dir + "/" + d + "-" + data_scale))
+        procs.append(mkdir(input_dir + "/" + d + "-" + str(data_scale)))
 
-    [p.join() for p in procs]
+    [p.wait() for p in procs]
+
     procs = []
 
     for d in RAW_DATA:
@@ -54,7 +58,7 @@ def main():
             dbgen_path, d + "-" + str(data_scale) + ".tbl"),
             input_dir + "/" + d + "-" + data_scale + ".txt"))
 
-    [p.join() for p in procs]
+    [p.wait() for p in procs]
 
 
 if __name__ == '__main__':
