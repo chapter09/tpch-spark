@@ -1,3 +1,8 @@
+# tpch-spark
+
+TPC-H queries implemented in Spark using the DataFrames API.
+Tested under Spark 2.0.0
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
@@ -10,13 +15,9 @@
     - [Running](#running)
     - [Application.conf](#applicationconf)
     - [Other Implementations](#other-implementations)
+    - [Acknowledgements](#acknowledgements)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-# tpch-spark
-
-TPC-H queries implemented in Spark using the DataFrames API.
-Tested under Spark 2.0.0
 
 ### Todo
 
