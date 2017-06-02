@@ -91,6 +91,7 @@ all {
   output-dir: "/tpch/",
   query-num: 23,
   data-scale: 1
+  app-suffix: "1-4-4-4-lineitem-order" //data_scale-exe#-cpu#-mem#-table1-table2
 }
 
 // Table list:
