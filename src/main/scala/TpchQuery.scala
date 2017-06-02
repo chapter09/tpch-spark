@@ -85,16 +85,7 @@ object TpchQuery {
     val appSuffix = tpchConf.getString("all.app-suffix")
 
     val sparkConf = new SparkConf()
-<<<<<<< HEAD
       .setAppName(f"Q$queryNum-$appSuffix")
-=======
-      //.set("spark.executor.cores", "1")
-      //.set("spark.worker.cores", "4")
-      //.set("spark.worker.momeory", "8G")
-      //.set("spark.executor.instances", "4")
-      //.set("spark.executor.memory", "2G")
-      .setAppName(f"TPCH Q$queryNum-$appSuffix")
->>>>>>> a945cf6de98a94886b661307959736a7c888d362
 
     val sc = new SparkContext(sparkConf)
 
