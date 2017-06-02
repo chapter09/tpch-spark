@@ -21,9 +21,6 @@ class Q23 extends TpchQuery {
     val spark = SparkSession
       .builder()
       .config("spark.sql.warehouse.dir", warehouseLocation)
-      .config("spark.worker.cores", "1")
-      .config("spark.worker.instances", "4")
-      .config("spark.worker.memory", "2G")
       .enableHiveSupport()
       .getOrCreate()
 
