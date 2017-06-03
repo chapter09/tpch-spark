@@ -20,6 +20,7 @@ project/plugins/project/
 
 # tpch dbgen specific
 dbgen/*.tbl
+dbgen/*.tbl.u1
 dbgen/*.o
 dbgen/dbgen
 dbgen/output

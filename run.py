@@ -13,7 +13,7 @@ CONFS = [
     "partsupp-lineitem.conf",
     "partsupp-supplier.conf",
     "region-nation.conf",
-    "supplier-customer.conf",
+    #"supplier-customer.conf",
     "supplier-nation.conf"
 ]
 
