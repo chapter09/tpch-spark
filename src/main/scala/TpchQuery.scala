@@ -4,6 +4,10 @@ import java.io._
 
 import org.apache.spark.sql._
 import org.apache.spark.{SparkConf, SparkContext}
+import org.apache.spark.util.SizeEstimator
+//import org.apache.spark.sql.Row
+//import org.apache.spark.rdd.RDD
+//import org.apache.spark.rdd
 
 import scala.collection.mutable.ListBuffer
 
@@ -33,7 +37,7 @@ abstract class TpchQuery {
 
 object TpchQuery {
 
-  def outputDF(df: DataFrame, outputDir: String, className: String): Unit = {
+  def outputDF(df: DataFrame, outputDir: String, className: String): DataFrame = {
 
     if (outputDir == null || outputDir == "")
       df.collect().foreach(println)
@@ -41,20 +45,26 @@ object TpchQuery {
       //df.write.mode("overwrite").json(outputDir + "/" + className + ".out") // json to avoid alias
       df.write.mode("overwrite").format(
         "com.databricks.spark.csv").option("header", "true").save(outputDir + "/" + className)
+      df
   }
+
+//  def calcRDDSize(rdd: RDD[String]): Long = {
+//    rdd.map(_.getBytes("UTF-8").length.toLong)
+//      .reduce(_+_) //add the sizes together
+//  }
 
   def executeQueries(
     sc: SparkContext,
     schemaProvider: TpchSchemaProvider,
     queryNum: Int,
-    tpchConf: TpchConf): ListBuffer[(String, Float)] = {
+    tpchConf: TpchConf): ListBuffer[(String, Float, Float)] = {
 
     // if set write results to hdfs, if null write to stdout
     // val OUTPUT_DIR: String = "/tpch"
     /*val OUTPUT_DIR: String = "file://" + new File(".").getAbsolutePath() + "/dbgen/output"*/
     val OUTPUT_DIR = tpchConf.getString("all.hdfs") + tpchConf.getString("all.output-dir")
 
-    val results = new ListBuffer[(String, Float)]
+    val results = new ListBuffer[(String, Float, Float)]
 
     var fromNum = 1
     var toNum = 22
@@ -66,11 +76,15 @@ object TpchQuery {
     for (queryNo <- fromNum to toNum) {
       val t0 = System.nanoTime()
       val query = Class.forName(f"main.scala.Q$queryNo%02d").newInstance.asInstanceOf[TpchQuery]
-      outputDF(query.execute(sc, schemaProvider, tpchConf), OUTPUT_DIR, query.getName)
+      val df = outputDF(query.execute(sc, schemaProvider, tpchConf), OUTPUT_DIR, query.getName)
 
       val t1 = System.nanoTime()
       val elapsed = (t1 - t0) / 1000000000.0f // second
-      results += Tuple2(query.getName, elapsed)
+
+//      val outputSize = calcRDDSize(df.rdd.map(_.toString()))
+      val outputSize = SizeEstimator.estimate(df)
+      results += Tuple3(sc.appName, outputSize, elapsed)
+
     }
 
     results
@@ -95,14 +109,14 @@ object TpchQuery {
 
     val schemaProvider = if (queryNum == 23) null else new TpchSchemaProvider(sc, tpchConf, INPUT_DIR)
 
-    val output = new ListBuffer[(String, Float)]
+    val output = new ListBuffer[(String, Float, Float)]
     output ++= executeQueries(sc, schemaProvider, queryNum, tpchConf)
 
     val outFile = new File("TIMES.txt")
     val bw = new BufferedWriter(new FileWriter(outFile, true))
 
     output.foreach {
-      case (key, value) => bw.write(f"$key%s\t$value%1.8f\n")
+      case (key, size, value) => bw.write(f"$key%s\t$size\t$value%1.8f\n")
     }
 
     bw.close()
