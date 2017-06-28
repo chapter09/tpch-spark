@@ -4,6 +4,7 @@ import os
 import os.path as path
 import subprocess
 from pyhocon import ConfigFactory
+import argparse
 
 RAW_DATA = [
     "customer",
@@ -15,15 +16,31 @@ RAW_DATA = [
     "region",
     "supplier"]
 
+DST = {'hao-ml-st': ['lineitem', 'supplier', 'region', 'part'],
+       'hao-ml-1': ['customer', 'orders', 'nation', 'partsupp']}
+
 SF = 5
 
 def run(cmd):
-    return subprocess.Popen(cmd, shell=True, cwd=os.environ["HADOOP_HOME"])
+    return subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, 
+                            stderr=subprocess.STDOUT,
+                            cwd=os.environ["HADOOP_HOME"])
 
 
-def put(f, dst, opts=None):
-    print("Upload %s to %s"% (f, dst))
-    return run("./bin/hdfs dfs -put %s %s" % (f, dst))
+def put(f, dst):
+    print("Upload %s to %s" % (f, dst))
+    return run("./bin/hdfs dfs -put -f %s %s" % (f, dst))
+
+
+def putx(f, dst, fav_node):
+    print("Upload %s to %s at %s" % (f, dst, fav_node))
+    proc = run("./bin/hdfs dfs -putx -f %s %s %s" % (f, dst, fav_node))
+    stdout, stderr = proc.communicate()
+    while b"were specified but not chosen" in stdout:
+        print("retry allocating table")
+        proc = run("./bin/hdfs dfs -putx -f %s %s %s" % (f, dst, fav_node))
+        stdout, stderr = proc.communicate()
+    return proc
 
 
 def mkdir(p):
@@ -48,6 +65,14 @@ def main():
         print("Please Specify HADOOP_HOME")
         exit(0)
 
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-m', action='store_true', default=False, 
+                        help="Multi-node mode")
+    parser.add_argument('-u', action='store_true', default=False, 
+                        help="Reuse existing dbgen data")
+
+    opts = parser.parse_args()
+
     conf = parse_config()
     input_dir = conf.get_string("all.input-dir")
     dbgen_path = path.abspath("../dbgen/")
@@ -55,20 +80,37 @@ def main():
     try:
         for data_scale in range(1, SF+1):
 
-            dbgen(data_scale)
+            if not opts.u:
+                dbgen(data_scale)
+
+                procs = []
+                for d in RAW_DATA:
+                    p = mkdir(input_dir + "/" + d + "-" + str(data_scale))
+                    procs.append(p)
+
+                [p.wait() for p in procs]
 
             procs = []
-            for d in RAW_DATA:
-                procs.append(mkdir(input_dir + "/" + d + "-" + str(data_scale)))
-
-            [p.wait() for p in procs]
-
-            procs = []
 
             for d in RAW_DATA:
-                procs.append(put(path.join(dbgen_path, d + ".tbl"),
-                                 input_dir + "/" + d + "-" + str(data_scale)
-                                 + "/" + d + "-" + str(data_scale) + ".txt"))
+                if opts.m:
+                    if d in list(DST.values())[0]:
+                        node = list(DST.keys())[0]
+                    elif d in list(DST.values())[1]:
+                        node = list(DST.keys())[1]
+                    else:
+                        print("Error: " + d + "does not exist!")
+                        exit(0)
+                    p = putx(path.join(dbgen_path, d + ".tbl"),
+                            input_dir + "/" + d + "-" + str(data_scale)
+                            + "/" + d + "-" + str(data_scale) + ".txt", 
+                            node)
+                    procs.append(p)
+                else:
+                    p = put(path.join(dbgen_path, d + ".tbl"),
+                            input_dir + "/" + d + "-" + str(data_scale)
+                            + "/" + d + "-" + str(data_scale) + ".txt")
+                    procs.append(p)
 
             [p.wait() for p in procs]
     except KeyboardInterrupt:
