@@ -28,10 +28,13 @@ Tested under Spark 2.0.0
 
 ### Pre-run
 
-Setup env `HADOOP_HOME` as:
+Setup env as below:
 
 ```shell
 export HADOOP_HOME=/home/ubuntu/hadoop-2.7.3
+PATH=$PATH:$HADOOP_HOME/bin/
+export SPARK_HOME=/home/ubuntu/spark-2.0.2
+PATH=$PATH:$SPARK_HOME/bin/
 ```
 
 #### Generate dataset
