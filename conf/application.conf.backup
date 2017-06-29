@@ -1,10 +1,10 @@
 all {
-  hdfs: "hdfs://10.12.3.36:8020/",
+  hdfs: "hdfs://10.2.3.17:8020/",
   input-dir: "/tpch/",
   output-dir: "/tpch/",
   query-num: 23,
   data-scale: 1,
-  app-suffix: "1-4-4-4-10-supplier-nation" //data_scale-exe#-cpu#-mem#-bandwidth-table1-table2
+  app-suffix: ""
 }
 
 // Table list:
