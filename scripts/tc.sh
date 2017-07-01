@@ -2,7 +2,7 @@
 
 dst_ip="10.12.3.40"
 dev="ens3"
-bw="10"
+bw="400"
 
 if [[ $(tc qdisc show dev ${dev} | grep 'htb') ]]; then
   sudo tc qdisc del dev ${dev} root handle 1: htb

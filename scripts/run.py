@@ -8,8 +8,8 @@ from pyhocon import HOCONConverter
 from collections import OrderedDict
 import argparse
 
-TEST = True
-(EXE, CPU, MEM, BW) = (2, 8, 8, 100)
+TEST = False
+(EXE, CPU, MEM, BW) = (2, 8, 8, 400)
 ROUND = 3
 SF = 5
 QUERYS = {
@@ -45,9 +45,17 @@ def gen_conf(t1, t2, scale, app_name, query):
     with open('../conf/application-run.conf', 'w') as f:
        f.write(HOCONConverter.convert(conf, 'hocon'))
 
+def result_size(app_name):
+    # KB
+    proc = run(
+        "hdfs dfs -du /tpch/Q23 | awk '{ SUM += $1 } END {print SUM/1024}'")
+    with open("./SIZE.txt", "a") as fd:
+        fd.write(app_name + ", " + proc.stdout.decode("utf-8") )
+
 
 def run(cmd):
-    return subprocess.run(cmd, shell=True)
+    return subprocess.run(cmd, stdout=subprocess.PIPE, 
+                          stderr=subprocess.STDOUT, shell=True)
 
 
 def main():
@@ -55,7 +63,7 @@ def main():
         for sf in range(1, SF + 1):
             for q in QUERYS:
                 t1, t2 = q.split('-')
-
+                #t1, t2 = ("nation", "customer")
                 if TEST:
                     app_name = "test-%d-%d-%d-%d-%d-%s-%s" % (
                         sf, EXE, CPU, MEM, BW, t1, t2) 
@@ -65,6 +73,7 @@ def main():
 
                 # Generate application-run.conf
                 gen_conf(t1, t2, sf, app_name, q)
+                #gen_conf("nation", "customer", sf, app_name, q)
                 for i in range(0, ROUND):
                     print("RUN " + app_name + " ROUND #" + str(i))
                     cmd = "spark-submit --class \"main.scala.TpchQuery\"" \
@@ -72,7 +81,7 @@ def main():
                     + " ../conf/application-run.conf" 
                     print(cmd)
                     run(cmd)
-                    exit(0)
+                    result_size(app_name)
                     time.sleep(10)
     except KeyboardInterrupt:
         print("Keyboard Interrupt")
