@@ -5,6 +5,7 @@ import java.io._
 import org.apache.spark.sql._
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.util.SizeEstimator
+import org.apache.spark.storage.StorageLevel
 //import org.apache.spark.sql.Row
 //import org.apache.spark.rdd.RDD
 //import org.apache.spark.rdd
@@ -57,14 +58,14 @@ object TpchQuery {
     sc: SparkContext,
     schemaProvider: TpchSchemaProvider,
     queryNum: Int,
-    tpchConf: TpchConf): ListBuffer[(String, Float, Float)] = {
+    tpchConf: TpchConf): ListBuffer[(String, Float)] = {
 
     // if set write results to hdfs, if null write to stdout
     // val OUTPUT_DIR: String = "/tpch"
     /*val OUTPUT_DIR: String = "file://" + new File(".").getAbsolutePath() + "/dbgen/output"*/
     val OUTPUT_DIR = tpchConf.getString("all.hdfs") + tpchConf.getString("all.output-dir")
 
-    val results = new ListBuffer[(String, Float, Float)]
+    val results = new ListBuffer[(String, Float)]
 
     var fromNum = 1
     var toNum = 22
@@ -81,10 +82,7 @@ object TpchQuery {
       val t1 = System.nanoTime()
       val elapsed = (t1 - t0) / 1000000000.0f // second
 
-//      val outputSize = calcRDDSize(df.rdd.map(_.toString()))
-      val outputSize = SizeEstimator.estimate(df)
-      results += Tuple3(sc.appName, outputSize, elapsed)
-
+      results += Tuple2(sc.appName, elapsed)
     }
 
     results
@@ -109,7 +107,7 @@ object TpchQuery {
 
     val schemaProvider = if (queryNum == 23) null else new TpchSchemaProvider(sc, tpchConf, INPUT_DIR)
 
-    val output = new ListBuffer[(String, Float, Float)]
+    val output = new ListBuffer[(String, Float)]
     output ++= executeQueries(sc, schemaProvider, queryNum, tpchConf)
 
     val outFile = new File("TIMES.txt")
