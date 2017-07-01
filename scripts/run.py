@@ -40,7 +40,7 @@ def gen_conf(t1, t2, scale, app_name, query):
     conf.put("Q23.table-list", [t1, t2])
     conf.put("all.data-scale", scale)
     conf.put("all.app-suffix", app_name)
-    conf.put("Q23.query", query)
+    conf.put("Q23.query", QUERYS[query])
 
     with open('../conf/application-run.conf', 'w') as f:
        f.write(HOCONConverter.convert(conf, 'hocon'))
