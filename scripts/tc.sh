@@ -1,8 +1,13 @@
 #!/bin/bash
 
-dst_ip="10.12.3.40"
+if [ $# -ne 2 ]; then
+  echo "tc.sh <dst_ip> <bw>"
+  exit 1
+fi
+
+dst_ip=$1
 dev="ens3"
-bw="400"
+bw=$2
 
 if [[ $(tc qdisc show dev ${dev} | grep 'htb') ]]; then
   sudo tc qdisc del dev ${dev} root handle 1: htb
