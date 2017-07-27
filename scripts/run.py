@@ -9,7 +9,7 @@ from collections import OrderedDict
 import argparse
 
 TEST = False
-(EXE, CPU, MEM, BW) = (2, 8, 8, 400)
+(EXE, CPU, MEM, BW) = (2, 8, 8, 10)
 ROUND = 3
 SF = 5
 QUERYS = {
