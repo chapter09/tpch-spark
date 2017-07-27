@@ -114,7 +114,7 @@ object TpchQuery {
     val bw = new BufferedWriter(new FileWriter(outFile, true))
 
     output.foreach {
-      case (key, size, value) => bw.write(f"$key%s\t$size\t$value%1.8f\n")
+      case (key, value) => bw.write(f"$key%s\t$value%1.8f\n")
     }
 
     bw.close()
