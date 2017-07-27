@@ -90,34 +90,34 @@ class TpchSchemaProvider(sc: SparkContext, tpchConf: TpchConf, inputDir: String)
   val dataScale = tpchConf.getString("all.data-scale")
 
   val dfMap = Map(
-    "customer" -> sc.textFile(inputDir + s"/customer-$dataScale.tbl*").map(_.split('|')).map(p =>
+    "customer" -> sc.textFile(inputDir + s"/customer-$dataScale/customer-$dataScale.txt").map(_.split('|')).map(p =>
       Customer(p(0).trim.toInt, p(1).trim, p(2).trim, p(3).trim.toInt,
         p(4).trim, p(5).trim.toDouble, p(6).trim, p(7).trim)).toDF(),
 
-    "lineitem" -> sc.textFile(inputDir + s"/lineitem-$dataScale.tbl*").map(_.split('|')).map(p =>
+    "lineitem" -> sc.textFile(inputDir + s"/lineitem-$dataScale/lineitem-$dataScale.txt").map(_.split('|')).map(p =>
       Lineitem(p(0).trim.toInt, p(1).trim.toInt, p(2).trim.toInt, p(3).trim.toInt,
         p(4).trim.toDouble, p(5).trim.toDouble, p(6).trim.toDouble, p(7).trim.toDouble,
         p(8).trim, p(9).trim, p(10).trim, p(11).trim, p(12).trim, p(13).trim, p(14).trim, p(15).trim)).toDF(),
 
-    "nation" -> sc.textFile(inputDir + s"/nation-$dataScale.tbl*").map(_.split('|')).map(p =>
+    "nation" -> sc.textFile(inputDir + s"/nation-$dataScale/nation-$dataScale.txt").map(_.split('|')).map(p =>
       Nation(p(0).trim.toInt, p(1).trim, p(2).trim.toInt, p(3).trim)).toDF(),
 
-    "region" -> sc.textFile(inputDir + s"/region-$dataScale.tbl*").map(_.split('|')).map(p =>
+    "region" -> sc.textFile(inputDir + s"/region-$dataScale/region-$dataScale.txt").map(_.split('|')).map(p =>
       Region(p(0).trim.toInt, p(1).trim, p(2).trim)).toDF(),
 
-    "order" -> sc.textFile(inputDir + s"/orders-$dataScale.tbl*").map(_.split('|')).map(p =>
+    "order" -> sc.textFile(inputDir + s"/orders-$dataScale/orders-$dataScale.txt").map(_.split('|')).map(p =>
       Order(p(0).trim.toInt, p(1).trim.toInt, p(2).trim, p(3).trim.toDouble,
         p(4).trim, p(5).trim, p(6).trim, p(7).trim.toInt, p(8).trim)).toDF(),
 
-    "part" -> sc.textFile(inputDir + s"/part-$dataScale.tbl*").map(_.split('|')).map(p =>
+    "part" -> sc.textFile(inputDir + s"/part-$dataScale/part-$dataScale.txt").map(_.split('|')).map(p =>
       Part(p(0).trim.toInt, p(1).trim, p(2).trim, p(3).trim,
         p(4).trim, p(5).trim.toInt, p(6).trim, p(7).trim.toDouble, p(8).trim)).toDF(),
 
-    "partsupp" -> sc.textFile(inputDir + s"/partsupp-$dataScale.tbl*").map(_.split('|')).map(p =>
+    "partsupp" -> sc.textFile(inputDir + s"/partsupp-$dataScale/partsupp-$dataScale.txt").map(_.split('|')).map(p =>
       Partsupp(p(0).trim.toInt, p(1).trim.toInt, p(2).trim.toInt, p(3).trim.toDouble,
         p(4).trim)).toDF(),
 
-    "supplier" -> sc.textFile(inputDir + s"/supplier-$dataScale.tbl*").map(_.split('|')).map(p =>
+    "supplier" -> sc.textFile(inputDir + s"/supplier-$dataScale/supplier-$dataScale.txt").map(_.split('|')).map(p =>
       Supplier(p(0).trim.toInt, p(1).trim, p(2).trim, p(3).trim.toInt,
         p(4).trim, p(5).trim.toDouble, p(6).trim)).toDF())
 
