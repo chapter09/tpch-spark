@@ -92,9 +92,9 @@ def main():
     if len(sys.argv) == 1:
         all()
     elif len(sys.argv) == 2:
-        one_shot(sys.argv[1], None)
+        one_shot(int(sys.argv[1]))
     else:
-        one_shot(sys.argv[1], sys.argv[2])
+        one_shot(int(sys.argv[1]), int(sys.argv[2]))
 
 
 if __name__ == "__main__":
