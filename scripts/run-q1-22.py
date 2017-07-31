@@ -93,7 +93,7 @@ def main():
         all()
     elif len(sys.argv) == 2:
         one_shot(sys.argv[1], None)
-    else len(sys.argv) == 3:
+    else:
         one_shot(sys.argv[1], sys.argv[2])
 
 
