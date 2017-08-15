@@ -8,10 +8,13 @@ from pyhocon import HOCONConverter
 from collections import OrderedDict
 import argparse
 
+
 TEST = False
+HDFS = '10.7.3.3'
 (EXE, CPU, MEM, BW) = (2, 8, 8, 10)
 ROUND = 3
-SF = 5
+INIT_SF = 6
+SF = 10
 QUERYS = {
     "customer-orders": "SELECT * FROM order INNER JOIN customer " 
     + "ON customer.c_custkey=order.o_custkey",
@@ -39,6 +42,7 @@ def gen_conf(t1, t2, scale, app_name, query):
     conf = ConfigFactory.parse_file('../conf/application.conf')
     conf.put("Q23.table-list", [t1, t2])
     conf.put("all.data-scale", scale)
+    conf.put("all.hdfs", 'hdfs://%s:8020/'%HDFS)
     conf.put("all.app-suffix", app_name)
     conf.put("Q23.query", QUERYS[query])
 
@@ -60,7 +64,7 @@ def run(cmd):
 
 def main():
     try:
-        for sf in range(1, SF + 1):
+        for sf in range(INIT_SF, SF + 1):
             for q in QUERYS:
                 t1, t2 = q.split('-')
                 #t1, t2 = ("nation", "customer")

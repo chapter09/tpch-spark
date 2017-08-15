@@ -16,10 +16,11 @@ RAW_DATA = [
     "region",
     "supplier"]
 
-DST = {'hao-ml-st': ['lineitem', 'supplier', 'region', 'part'],
-       'hao-ml-1': ['customer', 'orders', 'nation', 'partsupp']}
+DST = {'hao-ml-2': ['lineitem', 'supplier', 'region', 'part'],
+       'hao-ml-5': ['customer', 'orders', 'nation', 'partsupp']}
 
-SF = 5
+INIT_SF = 6
+SF = 10
 
 def run(cmd):
     return subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, 
@@ -78,7 +79,7 @@ def main():
     dbgen_path = path.abspath("../dbgen/")
 
     try:
-        for data_scale in range(1, SF+1):
+        for data_scale in range(INIT_SF, SF+1):
 
             if not opts.u:
                 dbgen(data_scale)
