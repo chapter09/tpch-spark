@@ -11,7 +11,7 @@ import argparse
 
 TEST = False
 HDFS = '10.7.3.3'
-(EXE, CPU, MEM, BW) = (2, 8, 8, 10)
+(EXE, CPU, MEM, BW) = (2, 8, 8, 800)
 ROUND = 3
 INIT_SF = 6
 SF = 10
