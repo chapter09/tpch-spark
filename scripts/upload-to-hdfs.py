@@ -16,11 +16,13 @@ RAW_DATA = [
     "region",
     "supplier"]
 
-DST = {'hao-ml-2': ['lineitem', 'supplier', 'region', 'part'],
-       'hao-ml-5': ['customer', 'orders', 'nation', 'partsupp']}
+DST = {'hao-ml-1': ['lineitem', 'supplier'],
+       'hoa-ml-7': ['partsupp', 'part'],
+       'hoa-ml-6': ['orders', 'region'],
+       'hao-ml-4': ['customer', 'nation']}
 
-INIT_SF = 6
-SF = 10
+INIT_SF = 15
+SF = 15
 
 def run(cmd):
     return subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, 
@@ -61,6 +63,13 @@ def dbgen(scale):
     p.wait()
 
 
+def key_by_val(table_dict, value):
+    for key, val in table_dict.items():
+        if value in val:
+            return key
+    return None
+
+
 def main():
     if not path.exists(os.environ["HADOOP_HOME"]):
         print("Please Specify HADOOP_HOME")
@@ -93,21 +102,20 @@ def main():
 
             procs = []
 
-            for d in RAW_DATA:
-                if opts.m:
-                    if d in list(DST.values())[0]:
-                        node = list(DST.keys())[0]
-                    elif d in list(DST.values())[1]:
-                        node = list(DST.keys())[1]
-                    else:
-                        print("Error: " + d + "does not exist!")
+            if opts.m:
+                for d in RAW_DATA:
+                    node = key_by_val(DST, d)
+                    if node is None:
+                        print("Error: " + d + " does not exist!")
                         exit(0)
+
                     p = putx(path.join(dbgen_path, d + ".tbl"),
                             input_dir + "/" + d + "-" + str(data_scale)
                             + "/" + d + "-" + str(data_scale) + ".txt", 
                             node)
                     procs.append(p)
-                else:
+            else:
+                for d in RAW_DATA:
                     p = put(path.join(dbgen_path, d + ".tbl"),
                             input_dir + "/" + d + "-" + str(data_scale)
                             + "/" + d + "-" + str(data_scale) + ".txt")
