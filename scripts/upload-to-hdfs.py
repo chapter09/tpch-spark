@@ -99,12 +99,12 @@ def main():
             if not opts.u:
                 dbgen(data_scale)
 
-                procs = []
-                for d in RAW_DATA:
-                    p = mkdir(input_dir + "/" + d + "-" + str(data_scale))
-                    procs.append(p)
+            procs = []
+            for d in RAW_DATA:
+                p = mkdir(input_dir + "/" + d + "-" + str(data_scale))
+                procs.append(p)
 
-                [p.wait() for p in procs]
+            [p.wait() for p in procs]
 
             procs = []
 

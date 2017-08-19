@@ -1,6 +1,27 @@
 ## Usages of Scripts 
 
+#### Before you run
 
+Modify the config file at `../conf/application.conf`.
+
+#### Install dependencies
+
+```
+sudo pip3 install -r requirements.txt
+```
+
+#### upload-to-hdfs.py 
+
+For single node:
+
+```
+./upload-to-hdfs.py
+```
+
+For multiple nodes (when you need to assign storage node):
+```
+upload-to-hdfs.py -m
+```
 
 
 
