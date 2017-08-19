@@ -10,11 +10,11 @@ import argparse
 
 
 TEST = False
-HDFS = '10.7.3.3'
-(EXE, CPU, MEM, BW) = (2, 8, 8, 800)
+HDFS = '10.2.3.20'
+(EXE, CPU, MEM, BW) = (2, 8, 8, 500)
 ROUND = 3
 INIT_SF = 6
-SF = 10
+SF = 12
 QUERYS = {
     "customer-orders": "SELECT * FROM order INNER JOIN customer " 
     + "ON customer.c_custkey=order.o_custkey",

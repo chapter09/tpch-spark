@@ -16,13 +16,16 @@ RAW_DATA = [
     "region",
     "supplier"]
 
-DST = {'hao-ml-1': ['lineitem', 'supplier'],
-       'hoa-ml-7': ['partsupp', 'part'],
-       'hoa-ml-6': ['orders', 'region'],
-       'hao-ml-4': ['customer', 'nation']}
+#DST = {'hao-ml-1': ['lineitem', 'supplier'],
+#       'hoa-ml-7': ['orders', 'part'],
+#       'hoa-ml-6': ['partsupp', 'region'],
+#       'hao-ml-8': ['customer', 'nation']}
 
-INIT_SF = 15
-SF = 15
+DST = {'hao-ml-2': ['lineitem', 'supplier', 'region', 'part'],
+       'hao-ml-5': ['customer', 'orders', 'nation', 'partsupp']}
+
+INIT_SF = 6
+SF = 12
 
 def run(cmd):
     return subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, 
@@ -41,8 +44,11 @@ def putx(f, dst, fav_node):
     stdout, stderr = proc.communicate()
     while b"were specified but not chosen" in stdout:
         print("retry allocating table")
-        proc = run("./bin/hdfs dfs -putx -f %s %s %s" % (f, dst, fav_node))
+        cmd = "./bin/hdfs dfs -putx -f %s %s %s" % (f, dst, fav_node)
+        print(cmd)
+        proc = run(cmd)
         stdout, stderr = proc.communicate()
+    #print(stdout, stderr)
     return proc
 
 
