@@ -16,9 +16,9 @@ ROUND = 3
 INIT_SF = 6
 SF = 12
 QUERYS = {
-    "customer-orders": "SELECT * FROM order INNER JOIN customer " 
+    "customer-order": "SELECT * FROM order INNER JOIN customer " 
     + "ON customer.c_custkey=order.o_custkey",
-    "lineitem-orders": "SELECT * FROM lineitem INNER JOIN order "
+    "lineitem-order": "SELECT * FROM lineitem INNER JOIN order "
     + "ON lineitem.l_orderkey=order.o_orderkey",
     "nation-customer": "SELECT * FROM nation INNER JOIN customer "
     + "ON nation.n_nationkey=customer.c_nationkey",
