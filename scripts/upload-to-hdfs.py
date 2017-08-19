@@ -17,9 +17,9 @@ RAW_DATA = [
     "supplier"]
 
 DST = {'hao-ml-1': ['lineitem', 'supplier'],
-       'hoa-ml-7': ['partsupp', 'part'],
-       'hoa-ml-6': ['orders', 'region'],
-       'hao-ml-4': ['customer', 'nation']}
+       'hoa-ml-7': ['orders', 'part'],
+       'hoa-ml-6': ['partsupp', 'region'],
+       'hao-ml-8': ['customer', 'nation']}
 
 INIT_SF = 15
 SF = 15
@@ -43,6 +43,7 @@ def putx(f, dst, fav_node):
         print("retry allocating table")
         proc = run("./bin/hdfs dfs -putx -f %s %s %s" % (f, dst, fav_node))
         stdout, stderr = proc.communicate()
+    # print(stdout, stderr)
     return proc
 
 
@@ -93,12 +94,12 @@ def main():
             if not opts.u:
                 dbgen(data_scale)
 
-                procs = []
-                for d in RAW_DATA:
-                    p = mkdir(input_dir + "/" + d + "-" + str(data_scale))
-                    procs.append(p)
+            procs = []
+            for d in RAW_DATA:
+                p = mkdir(input_dir + "/" + d + "-" + str(data_scale))
+                procs.append(p)
 
-                [p.wait() for p in procs]
+            [p.wait() for p in procs]
 
             procs = []
 

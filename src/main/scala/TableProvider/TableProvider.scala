@@ -92,7 +92,7 @@ class Order(conf: TpchConf) extends TpchTable(conf) {
       "o_totalprice Double, o_orderdate String, o_orderpriority String, " +
       "o_clerk String,  o_shippriority Int, o_comment String) " +
       "ROW FORMAT DELIMITED FIELDS TERMINATED BY '\\|' " +
-      f"STORED AS TEXTFILE LOCATION '$inputDir/order-$dataScale'")
+      f"STORED AS TEXTFILE LOCATION '$inputDir/orders-$dataScale'")
   }
 }
 
