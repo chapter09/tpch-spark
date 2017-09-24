@@ -1,0 +1,55 @@
+Q11-1, 47.7637
+Q11-2, 0.75293
+Q11-3, 0
+Q11-4, 0
+Q11-5, 0
+Q02-6, 16.3887
+Q03-6, du: `/tpch/Q03': No such file or directory
+0
+Q05-6, du: `/tpch/Q05': No such file or directory
+0
+Q07-6, du: `/tpch/Q07': No such file or directory
+0
+Q02-6, 16.3887
+Q03-6, du: `/tpch/Q03': No such file or directory
+0
+Q05-6, du: `/tpch/Q05': No such file or directory
+0
+Q07-6, du: `/tpch/Q07': No such file or directory
+0
+Q08-6, du: `/tpch/Q08': No such file or directory
+0
+Q09-6, du: `/tpch/Q09': No such file or directory
+0
+Q10-6, du: `/tpch/Q10': No such file or directory
+0
+Q11-6, du: `/tpch/Q11': No such file or directory
+0
+Q18-6, du: `/tpch/Q18': No such file or directory
+0
+Q21-6, du: `/tpch/Q21': No such file or directory
+0
+Q02-6, 16.3887
+Q03-6, du: `/tpch/Q03': No such file or directory
+0
+Q05-6, du: `/tpch/Q05': No such file or directory
+0
+Q02-15, 16.3887
+Q03-15, du: `/tpch/Q03': No such file or directory
+0
+Q05-15, du: `/tpch/Q05': No such file or directory
+0
+Q07-15, du: `/tpch/Q07': No such file or directory
+0
+Q08-15, du: `/tpch/Q08': No such file or directory
+0
+Q09-15, du: `/tpch/Q09': No such file or directory
+0
+Q10-15, du: `/tpch/Q10': No such file or directory
+0
+Q11-15, du: `/tpch/Q11': No such file or directory
+0
+Q18-15, du: `/tpch/Q18': No such file or directory
+0
+Q21-15, du: `/tpch/Q21': No such file or directory
+0
