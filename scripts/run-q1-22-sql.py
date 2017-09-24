@@ -10,22 +10,19 @@ import argparse
 
 
 TEST = False
-HDFS = '10.7.3.3'
+HDFS = '10.128.0.3'
 (EXE, CPU, MEM, BW) = (2, 8, 8, 800)
 ROUND = 3
 INIT_SF = 6
 SF = 10
-QUERYS = {
-}
+QUERYS = []
 
 
 def gen_conf(t1, t2, scale, app_name, query):
-    conf = ConfigFactory.parse_file('../conf/application.conf')
-    conf.put("Q23.table-list", [t1, t2])
-    conf.put("all.data-scale", scale)
+    conf = ConfigFactory.parse_file('../conf/application-q%d.conf'%query)
+    conf.put("all.data-scale", 30)
     conf.put("all.hdfs", 'hdfs://%s:8020/'%HDFS)
     conf.put("all.app-suffix", app_name)
-    conf.put("Q23.query", QUERYS[query])
 
     with open('../conf/application-run.conf', 'w') as f:
        f.write(HOCONConverter.convert(conf, 'hocon'))
@@ -53,8 +50,7 @@ def main():
                     app_name = "test-%d-%d-%d-%d-%d-%s-%s" % (
                         sf, EXE, CPU, MEM, BW, t1, t2) 
                 else:
-                    app_name = "%d-%d-%d-%d-%d-%s-%s" % (
-                        sf, EXE, CPU, MEM, BW, t1, t2) 
+                    app_name = q
 
                 # Generate application-run.conf
                 gen_conf(t1, t2, sf, app_name, q)
